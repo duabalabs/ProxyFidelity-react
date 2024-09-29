@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+[![Cover Image](https://refine.ams3.cdn.digitaloceanspaces.com/example-readmes/CRM/crm-readme-temp.png "Cover Image")](https://github.com/refinedev/refine)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+    <a href="https://refine.dev">Home Page</a> |
+    <a href="https://discord.gg/refine">Discord</a> |
+    <a href="https://refine.dev/examples/">Examples</a> |
+    <a href="https://refine.dev/blog/">Blog</a> |
+    <a href="https://refine.dev/docs/">Documentation</a>
+</div>
+</div>
 
-## Available Scripts
+<br />
+<br />
 
-In the project directory, you can run:
+<div align="center">Build your React-based internal tools, admin panels, dashboards, B2B apps with flexibility in mind.<br>An open source, headless web application framework developed with flexibility in mind.
 
-### `npm start`
+<br />
+<br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[![Discord](https://img.shields.io/discord/837692625737613362.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/refine)
+[![Twitter Follow](https://img.shields.io/twitter/follow/refine_dev?style=social)](https://twitter.com/refine_dev)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<a href="https://www.producthunt.com/posts/refine-3?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-refine&#0045;3" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=362220&theme=light&period=daily" alt="refine - 100&#0037;&#0032;open&#0032;source&#0032;React&#0032;framework&#0032;to&#0032;build&#0032;web&#0032;apps&#0032;3x&#0032;faster | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
-### `npm test`
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## About
 
-### `npm run build`
+⭐ Check out the live demo of the application [here](https://example.crm.refine.dev/).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This is a complete CRM (Customer Relationship Management) example project built using [refine](https://refine.dev/) and [Ant Design](https://ant.design/). It provides a set of tools and features to manage customer data, track interactions, and streamline business processes.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The application includes features such as dashboard analytics, a calendar for scheduling appointments, a scrum board for task management, and CRUD operations for managing companies, contacts, and quotes.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+refine is a React-based powerful framework for building low-code applications. It is primarily focused on implementing data-heavy apps such as internal tools, dashboards, admin panels, and storefronts. It comes with a core package that segregates app concerns like data handling, authentication, access control, etc., into React contexts. It also supports integration with industry standard backend systems such and UI frameworks. It is highly customizable and extensible.
 
-### `npm run eject`
+## Features
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Dashboard**: Gain insights into your business with interactive charts and analytics.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Calendar**: Schedule and manage appointments, meetings, and events.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**Scrumboard**: Organize and track tasks using a Kanban-style board.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**Companies**: Create, update, and delete company records.
 
-## Learn More
+**Contacts**: Manage your customer contacts efficiently.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Quotes**: Generate and manage quotes for your clients.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Administration**: Configure application settings and user roles.
+
+<br>
+
+![Product Edit Page](https://refine.ams3.cdn.digitaloceanspaces.com/example-readmes/dashboard.png "Product Edit Page")
+
+<br>
+
+![Dashboard Page](https://refine.ams3.cdn.digitaloceanspaces.com/example-readmes/companies.png "Dashboard Page")
+
+<br>
+
+![Product List Page](https://refine.ams3.cdn.digitaloceanspaces.com/example-readmes/contacts.png "Product List Page")
+
+<br>
+
+![Product Edit Page](https://refine.ams3.cdn.digitaloceanspaces.com/example-readmes/sales-pipeline.png "Product Edit Page")
+<br>
+
+![Product Edit Page](https://refine.ams3.cdn.digitaloceanspaces.com/example-readmes/login.png "Product Edit Page")
+
+## Try this example on your local
+
+```bash
+npm create refine-app@latest -- --example app-crm
+```
+
+## Try this example on CodeSandbox
+
+<br/>
+
+[![Open app-crm example from refine](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/embed/github/refinedev/refine/tree/master/examples/app-crm?view=preview&theme=dark&codemirror=1)
