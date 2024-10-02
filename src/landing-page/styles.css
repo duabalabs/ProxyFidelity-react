@@ -1,0 +1,16 @@
+.service-card {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.service-card:hover {
+  background-color: #f0f5ff; /* Background color on hover */
+  transform: translateY(-10px); /* Lift effect */
+}
+
+.service-image {
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.1); /* Slightly enlarge image on hover */
+}
