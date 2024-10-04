@@ -368,16 +368,16 @@ export type CompanyUpdateCompanyNoteMutation = {
   updateOneCompanyNote: Pick<Types.CompanyNote, "id" | "note">;
 };
 
-export type CompanyQuotesTableQueryVariables = Types.Exact<{
-  filter: Types.QuoteFilter;
-  sorting?: Types.InputMaybe<Array<Types.QuoteSort> | Types.QuoteSort>;
+export type CompanyFilesTableQueryVariables = Types.Exact<{
+  filter: Types.FileFilter;
+  sorting?: Types.InputMaybe<Array<Types.FileSort> | Types.FileSort>;
   paging: Types.OffsetPaging;
 }>;
 
-export type CompanyQuotesTableQuery = {
-  quotes: Pick<Types.QuoteConnection, "totalCount"> & {
+export type CompanyFilesTableQuery = {
+  files: Pick<Types.FileConnection, "totalCount"> & {
     nodes: Array<
-      Pick<Types.Quote, "id" | "title" | "status" | "total"> & {
+      Pick<Types.File, "id" | "title" | "status" | "total"> & {
         company: Pick<Types.Company, "id" | "name">;
         contact: Pick<Types.Contact, "id" | "name" | "avatarUrl">;
         salesOwner: Pick<Types.User, "id" | "name" | "avatarUrl">;
@@ -618,8 +618,8 @@ export type DashboardTotalCountsQuery = {
   deals: Pick<Types.DealConnection, "totalCount">;
 };
 
-export type QuoteFieldsFragment = Pick<
-  Types.Quote,
+export type FileFieldsFragment = Pick<
+  Types.File,
   | "id"
   | "title"
   | "status"
@@ -631,7 +631,7 @@ export type QuoteFieldsFragment = Pick<
 > & {
   items: Array<
     Pick<
-      Types.QuoteItem,
+      Types.FileItem,
       "title" | "unitPrice" | "quantity" | "discount" | "totalPrice"
     >
   >;
@@ -643,17 +643,17 @@ export type QuoteFieldsFragment = Pick<
   contact: Pick<Types.Contact, "id" | "name">;
 };
 
-export type QuotesTableQueryVariables = Types.Exact<{
-  filter: Types.QuoteFilter;
-  sorting: Array<Types.QuoteSort> | Types.QuoteSort;
+export type FilesTableQueryVariables = Types.Exact<{
+  filter: Types.FileFilter;
+  sorting: Array<Types.FileSort> | Types.FileSort;
   paging: Types.OffsetPaging;
 }>;
 
-export type QuotesTableQuery = {
-  quotes: Pick<Types.QuoteConnection, "totalCount"> & {
+export type FilesTableQuery = {
+  files: Pick<Types.FileConnection, "totalCount"> & {
     nodes: Array<
       Pick<
-        Types.Quote,
+        Types.File,
         | "id"
         | "title"
         | "status"
@@ -665,7 +665,7 @@ export type QuotesTableQuery = {
       > & {
         items: Array<
           Pick<
-            Types.QuoteItem,
+            Types.FileItem,
             "title" | "unitPrice" | "quantity" | "discount" | "totalPrice"
           >
         >;
@@ -680,13 +680,13 @@ export type QuotesTableQuery = {
   };
 };
 
-export type QuotesGetQuoteQueryVariables = Types.Exact<{
+export type FilesGetFileQueryVariables = Types.Exact<{
   id: Types.Scalars["ID"]["input"];
 }>;
 
-export type QuotesGetQuoteQuery = {
-  quote: Pick<
-    Types.Quote,
+export type FilesGetFileQuery = {
+  file: Pick<
+    Types.File,
     | "id"
     | "title"
     | "status"
@@ -698,7 +698,7 @@ export type QuotesGetQuoteQuery = {
   > & {
     items: Array<
       Pick<
-        Types.QuoteItem,
+        Types.FileItem,
         "title" | "unitPrice" | "quantity" | "discount" | "totalPrice"
       >
     >;
@@ -711,13 +711,13 @@ export type QuotesGetQuoteQuery = {
   };
 };
 
-export type QuotesCreateQuoteMutationVariables = Types.Exact<{
-  input: Types.CreateOneQuoteInput;
+export type FilesCreateFileMutationVariables = Types.Exact<{
+  input: Types.CreateOneFileInput;
 }>;
 
-export type QuotesCreateQuoteMutation = {
-  createOneQuote: Pick<
-    Types.Quote,
+export type FilesCreateFileMutation = {
+  createOneFile: Pick<
+    Types.File,
     | "id"
     | "title"
     | "status"
@@ -729,7 +729,7 @@ export type QuotesCreateQuoteMutation = {
   > & {
     items: Array<
       Pick<
-        Types.QuoteItem,
+        Types.FileItem,
         "title" | "unitPrice" | "quantity" | "discount" | "totalPrice"
       >
     >;
@@ -742,13 +742,13 @@ export type QuotesCreateQuoteMutation = {
   };
 };
 
-export type QuotesUpdateQuoteMutationVariables = Types.Exact<{
-  input: Types.UpdateOneQuoteInput;
+export type FilesUpdateFileMutationVariables = Types.Exact<{
+  input: Types.UpdateOneFileInput;
 }>;
 
-export type QuotesUpdateQuoteMutation = {
-  updateOneQuote: Pick<
-    Types.Quote,
+export type FilesUpdateFileMutation = {
+  updateOneFile: Pick<
+    Types.File,
     | "id"
     | "title"
     | "status"
@@ -760,7 +760,7 @@ export type QuotesUpdateQuoteMutation = {
   > & {
     items: Array<
       Pick<
-        Types.QuoteItem,
+        Types.FileItem,
         "title" | "unitPrice" | "quantity" | "discount" | "totalPrice"
       >
     >;

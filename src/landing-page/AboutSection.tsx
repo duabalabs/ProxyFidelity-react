@@ -18,7 +18,7 @@ export const AboutSection = () => (
       <Row align="middle" gutter={[16, 16]}>
         <Col xs={24} md={12}>
           <motion.img
-            src="/assets/img/about.png"
+            src="/assets/img/about.webp"
             alt="About Us"
             className="w-full h-auto rounded-lg shadow-lg"
             initial={{ scale: 0.8 }}

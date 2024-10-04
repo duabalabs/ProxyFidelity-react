@@ -77,7 +77,7 @@ export const CommentForm = () => {
         src={me?.avatarUrl}
         name={me?.name}
       />
-      <Form {...formProps} style={{ width: "100%" }} onFinish={handleOnFinish}>
+      {/* <Form {...formProps} style={{ width: "100%" }} onFinish={handleOnFinish}>
         <Form.Item
           name="comment"
           noStyle
@@ -97,7 +97,7 @@ export const CommentForm = () => {
             addonAfter={formLoading && <LoadingOutlined />}
           />
         </Form.Item>
-      </Form>
+      </Form> */}
     </div>
   );
 };

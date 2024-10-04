@@ -22,7 +22,7 @@ export const HeroSection = () => (
         </Col>
         <Col xs={24} md={12}>
           <motion.img
-            src="/assets/img/hero-img.png"
+            src="/assets/img/hero-img.webp"
             alt="Hero Image"
             className="w-full h-auto"
             initial={{ scale: 0 }}

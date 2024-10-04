@@ -62,7 +62,7 @@ export class LocalParseBaseClass extends ParseBaseClass {
 
 export class ParseUserBaseClass extends Parse.User {
     constructor() {
-        super(Parse.User.className);
+        super((Parse.User as any).className);
         return new Proxy(this, {
             set: setter,
             get: getter,

@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import Parse from "parse";
-import { IParseServerAPICred, ParseInitialize } from "../lib/parse/initialize";
+
 import { SubClasses } from "../lib/parse/class";
+import { IParseServerAPICred, ParseInitialize } from "../lib/parse/initialize";
 
 export const useParseConnect = (parseConfig: IParseServerAPICred) => {
   const [user, setUser] = useState<Parse.User<Parse.Attributes>>();
@@ -11,7 +13,7 @@ export const useParseConnect = (parseConfig: IParseServerAPICred) => {
   useEffect(() => {
     const getConnected = async () => {
       const cloud = new ParseInitialize(parseConfig, SubClasses);
-      let currentUser = await Parse.User.currentAsync();
+      const currentUser = await Parse.User.currentAsync();
       if (currentUser) {
         setUser(currentUser);
       }

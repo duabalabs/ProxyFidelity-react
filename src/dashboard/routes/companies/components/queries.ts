@@ -132,12 +132,12 @@ export const COMPANY_UPDATE_COMPANY_NOTE_MUTATION = gql`
 `;
 
 export const COMPANY_QUOTES_TABLE_QUERY = gql`
-    query CompanyQuotesTable(
-        $filter: QuoteFilter!
-        $sorting: [QuoteSort!]
+    query CompanyFilesTable(
+        $filter: FileFilter!
+        $sorting: [FileSort!]
         $paging: OffsetPaging!
     ) {
-        quotes(filter: $filter, sorting: $sorting, paging: $paging) {
+        files(filter: $filter, sorting: $sorting, paging: $paging) {
             totalCount
             nodes {
                 id

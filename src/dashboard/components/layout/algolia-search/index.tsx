@@ -13,7 +13,7 @@ import type {
   Contact,
   Deal,
   Event,
-  Quote,
+  File,
   Task,
   User,
 } from "@/dashboard/graphql/schema.types";
@@ -76,7 +76,7 @@ export const AlgoliaSearch: React.FC = () => {
   );
 };
 
-type Hit = (User | Deal | Task | Company | Contact | Quote | Event) & {
+type Hit = (User | Deal | Task | Company | Contact | File | Event) & {
   resource: string;
 };
 
@@ -125,7 +125,7 @@ export const AlgoliaSearchResult: FC<SearchResultProps> = ({ onHitClick }) => {
   };
 
   const getResourceLink = (item: Hit) => {
-    if (["contacts", "quotes", "events", "user"].includes(item.resource)) {
+    if (["contacts", "files", "events", "user"].includes(item.resource)) {
       return showUrl(item.resource, item.id);
     }
 

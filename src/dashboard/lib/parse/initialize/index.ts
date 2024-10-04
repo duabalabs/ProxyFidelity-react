@@ -1,7 +1,8 @@
 "use client";
 
-import { ParseBaseClass } from '../class/baseClasses';
 import Parse from 'parse';
+
+import { ParseBaseClass } from '../class/baseClasses';
 
 export interface IParseServerAPICred {
   serverURL: string;
@@ -30,7 +31,7 @@ export class ParseInitialize {
   }
   registerParseSubClasses(subClasses: SubClass[]) {
     subClasses.forEach((subClass) =>
-      Parse.Object.registerSubclass(subClass.className, subClass.class)
+      Parse.Object.registerSubclass(subClass.className, subClass.class as any)
     );
   }
 }

@@ -1339,9 +1339,9 @@ export type CreateManyEventsInput = {
   events: Array<EventCreateInput>;
 };
 
-export type CreateManyQuotesInput = {
+export type CreateManyFilesInput = {
   /** Array of records to create */
-  quotes: Array<QuoteCreateInput>;
+  files: Array<FileCreateInput>;
 };
 
 export type CreateManyTaskCommentsInput = {
@@ -1404,9 +1404,9 @@ export type CreateOneEventInput = {
   event: EventCreateInput;
 };
 
-export type CreateOneQuoteInput = {
+export type CreateOneFileInput = {
   /** The record to create */
-  quote: QuoteCreateInput;
+  file: FileCreateInput;
 };
 
 export type CreateOneTaskCommentInput = {
@@ -1429,9 +1429,9 @@ export type CreateOneUserInput = {
   user: UserCreateInput;
 };
 
-export type CreateQuoteSubscriptionFilterInput = {
+export type CreateFileSubscriptionFilterInput = {
   /** Specify to filter the records returned. */
-  filter: QuoteSubscriptionFilter;
+  filter: FileSubscriptionFilter;
 };
 
 export type CreateTaskCommentSubscriptionFilterInput = {
@@ -2044,9 +2044,9 @@ export type DeleteManyEventsInput = {
   filter: EventDeleteFilter;
 };
 
-export type DeleteManyQuotesInput = {
+export type DeleteManyFilesInput = {
   /** Filter to find records to delete */
-  filter: QuoteDeleteFilter;
+  filter: FileDeleteFilter;
 };
 
 export type DeleteManyResponse = {
@@ -2159,14 +2159,14 @@ export type DeleteOneEventSubscriptionFilterInput = {
   filter: EventSubscriptionFilter;
 };
 
-export type DeleteOneQuoteInput = {
+export type DeleteOneFileInput = {
   /** The id of the record to delete. */
   id: Scalars["ID"]["input"];
 };
 
-export type DeleteOneQuoteSubscriptionFilterInput = {
+export type DeleteOneFileSubscriptionFilterInput = {
   /** Specify to filter the records returned. */
-  filter: QuoteSubscriptionFilter;
+  filter: FileSubscriptionFilter;
 };
 
 export type DeleteOneTaskCommentInput = {
@@ -2566,7 +2566,7 @@ export type Mutation = {
   createManyDeals: Array<Deal>;
   createManyEventCategories: Array<EventCategory>;
   createManyEvents: Array<Event>;
-  createManyQuotes: Array<Quote>;
+  createManyFiles: Array<File>;
   createManyTaskComments: Array<TaskComment>;
   createManyTaskStages: Array<TaskStage>;
   createManyTasks: Array<Task>;
@@ -2579,7 +2579,7 @@ export type Mutation = {
   createOneDealStage: DealStage;
   createOneEvent: Event;
   createOneEventCategory: EventCategory;
-  createOneQuote: Quote;
+  createOneFile: File;
   createOneTask: Task;
   createOneTaskComment: TaskComment;
   createOneTaskStage: TaskStage;
@@ -2592,7 +2592,7 @@ export type Mutation = {
   deleteManyDeals: DeleteManyResponse;
   deleteManyEventCategories: DeleteManyResponse;
   deleteManyEvents: DeleteManyResponse;
-  deleteManyQuotes: DeleteManyResponse;
+  deleteManyFiles: DeleteManyResponse;
   deleteManyTaskComments: DeleteManyResponse;
   deleteManyTaskStages: DeleteManyResponse;
   deleteManyTasks: DeleteManyResponse;
@@ -2605,7 +2605,7 @@ export type Mutation = {
   deleteOneDealStage: DealStageDeleteResponse;
   deleteOneEvent: EventDeleteResponse;
   deleteOneEventCategory: EventCategoryDeleteResponse;
-  deleteOneQuote: QuoteDeleteResponse;
+  deleteOneFile: FileDeleteResponse;
   deleteOneTask: TaskDeleteResponse;
   deleteOneTaskComment: TaskCommentDeleteResponse;
   deleteOneTaskStage: TaskStageDeleteResponse;
@@ -2621,7 +2621,7 @@ export type Mutation = {
   updateManyDeals: UpdateManyResponse;
   updateManyEventCategories: UpdateManyResponse;
   updateManyEvents: UpdateManyResponse;
-  updateManyQuotes: UpdateManyResponse;
+  updateManyFiles: UpdateManyResponse;
   updateManyTaskComments: UpdateManyResponse;
   updateManyTaskStages: UpdateManyResponse;
   updateManyTasks: UpdateManyResponse;
@@ -2634,7 +2634,7 @@ export type Mutation = {
   updateOneDealStage: DealStage;
   updateOneEvent: Event;
   updateOneEventCategory: EventCategory;
-  updateOneQuote: Quote;
+  updateOneFile: File;
   updateOneTask: Task;
   updateOneTaskComment: TaskComment;
   updateOneTaskStage: TaskStage;
@@ -2673,8 +2673,8 @@ export type MutationCreateManyEventsArgs = {
   input: CreateManyEventsInput;
 };
 
-export type MutationCreateManyQuotesArgs = {
-  input: CreateManyQuotesInput;
+export type MutationCreateManyFilesArgs = {
+  input: CreateManyFilesInput;
 };
 
 export type MutationCreateManyTaskCommentsArgs = {
@@ -2725,8 +2725,8 @@ export type MutationCreateOneEventCategoryArgs = {
   input: CreateOneEventCategoryInput;
 };
 
-export type MutationCreateOneQuoteArgs = {
-  input: CreateOneQuoteInput;
+export type MutationCreateOneFileArgs = {
+  input: CreateOneFileInput;
 };
 
 export type MutationCreateOneTaskArgs = {
@@ -2777,8 +2777,8 @@ export type MutationDeleteManyEventsArgs = {
   input: DeleteManyEventsInput;
 };
 
-export type MutationDeleteManyQuotesArgs = {
-  input: DeleteManyQuotesInput;
+export type MutationDeleteManyFilesArgs = {
+  input: DeleteManyFilesInput;
 };
 
 export type MutationDeleteManyTaskCommentsArgs = {
@@ -2829,8 +2829,8 @@ export type MutationDeleteOneEventCategoryArgs = {
   input: DeleteOneEventCategoryInput;
 };
 
-export type MutationDeleteOneQuoteArgs = {
-  input: DeleteOneQuoteInput;
+export type MutationDeleteOneFileArgs = {
+  input: DeleteOneFileInput;
 };
 
 export type MutationDeleteOneTaskArgs = {
@@ -2893,8 +2893,8 @@ export type MutationUpdateManyEventsArgs = {
   input: UpdateManyEventsInput;
 };
 
-export type MutationUpdateManyQuotesArgs = {
-  input: UpdateManyQuotesInput;
+export type MutationUpdateManyFilesArgs = {
+  input: UpdateManyFilesInput;
 };
 
 export type MutationUpdateManyTaskCommentsArgs = {
@@ -2945,8 +2945,8 @@ export type MutationUpdateOneEventCategoryArgs = {
   input: UpdateOneEventCategoryInput;
 };
 
-export type MutationUpdateOneQuoteArgs = {
-  input: UpdateOneQuoteInput;
+export type MutationUpdateOneFileArgs = {
+  input: UpdateOneFileInput;
 };
 
 export type MutationUpdateOneTaskArgs = {
@@ -3021,8 +3021,8 @@ export type Query = {
   eventCategory: EventCategory;
   events: EventConnection;
   me: User;
-  quote: Quote;
-  quotes: QuoteConnection;
+  file: File;
+  files: FileConnection;
   task: Task;
   taskAggregate: Array<TaskAggregateResponse>;
   taskComment: TaskComment;
@@ -3133,14 +3133,14 @@ export type QueryEventsArgs = {
   sorting?: Array<EventSort>;
 };
 
-export type QueryQuoteArgs = {
+export type QueryFileArgs = {
   id: Scalars["ID"]["input"];
 };
 
-export type QueryQuotesArgs = {
-  filter?: QuoteFilter;
+export type QueryFilesArgs = {
+  filter?: FileFilter;
   paging?: OffsetPaging;
-  sorting?: Array<QuoteSort>;
+  sorting?: Array<FileSort>;
 };
 
 export type QueryTaskArgs = {
@@ -3191,16 +3191,16 @@ export type QueryUsersArgs = {
   sorting?: Array<UserSort>;
 };
 
-export type Quote = {
+export type File = {
   company: Company;
   contact: Contact;
   createdAt: Scalars["DateTime"]["output"];
   createdBy: User;
   description?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
-  items: Array<QuoteItem>;
+  items: Array<FileItem>;
   salesOwner: User;
-  status: QuoteStatus;
+  status: FileStatus;
   subTotal: Scalars["Float"]["output"];
   tax: Scalars["Int"]["output"];
   title: Scalars["String"]["output"];
@@ -3209,39 +3209,39 @@ export type Quote = {
   updatedBy?: Maybe<User>;
 };
 
-export type QuoteConnection = {
+export type FileConnection = {
   /** Array of nodes. */
-  nodes: Array<Quote>;
+  nodes: Array<File>;
   /** Paging information */
   pageInfo: OffsetPageInfo;
   /** Fetch total count of records */
   totalCount: Scalars["Int"]["output"];
 };
 
-export type QuoteCreateInput = {
+export type FileCreateInput = {
   companyId: Scalars["ID"]["input"];
   contactId: Scalars["ID"]["input"];
   salesOwnerId: Scalars["ID"]["input"];
   title: Scalars["String"]["input"];
 };
 
-export type QuoteDeleteFilter = {
-  and?: InputMaybe<Array<QuoteDeleteFilter>>;
+export type FileDeleteFilter = {
+  and?: InputMaybe<Array<FileDeleteFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<QuoteDeleteFilter>>;
-  status?: InputMaybe<QuoteStatusFilterComparison>;
+  or?: InputMaybe<Array<FileDeleteFilter>>;
+  status?: InputMaybe<FileStatusFilterComparison>;
   title?: InputMaybe<StringFieldComparison>;
   total?: InputMaybe<FloatFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type QuoteDeleteResponse = {
+export type FileDeleteResponse = {
   createdAt?: Maybe<Scalars["DateTime"]["output"]>;
   description?: Maybe<Scalars["String"]["output"]>;
   id?: Maybe<Scalars["ID"]["output"]>;
-  items?: Maybe<Array<QuoteItem>>;
-  status?: Maybe<QuoteStatus>;
+  items?: Maybe<Array<FileItem>>;
+  status?: Maybe<FileStatus>;
   subTotal?: Maybe<Scalars["Float"]["output"]>;
   tax?: Maybe<Scalars["Int"]["output"]>;
   title?: Maybe<Scalars["String"]["output"]>;
@@ -3249,24 +3249,24 @@ export type QuoteDeleteResponse = {
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>;
 };
 
-export type QuoteFilter = {
-  and?: InputMaybe<Array<QuoteFilter>>;
-  company?: InputMaybe<QuoteFilterCompanyFilter>;
-  contact?: InputMaybe<QuoteFilterContactFilter>;
+export type FileFilter = {
+  and?: InputMaybe<Array<FileFilter>>;
+  company?: InputMaybe<FileFilterCompanyFilter>;
+  contact?: InputMaybe<FileFilterContactFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
-  createdBy?: InputMaybe<QuoteFilterUserFilter>;
+  createdBy?: InputMaybe<FileFilterUserFilter>;
   id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<QuoteFilter>>;
-  salesOwner?: InputMaybe<QuoteFilterUserFilter>;
-  status?: InputMaybe<QuoteStatusFilterComparison>;
+  or?: InputMaybe<Array<FileFilter>>;
+  salesOwner?: InputMaybe<FileFilterUserFilter>;
+  status?: InputMaybe<FileStatusFilterComparison>;
   title?: InputMaybe<StringFieldComparison>;
   total?: InputMaybe<FloatFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
-  updatedBy?: InputMaybe<QuoteFilterUserFilter>;
+  updatedBy?: InputMaybe<FileFilterUserFilter>;
 };
 
-export type QuoteFilterCompanyFilter = {
-  and?: InputMaybe<Array<QuoteFilterCompanyFilter>>;
+export type FileFilterCompanyFilter = {
+  and?: InputMaybe<Array<FileFilterCompanyFilter>>;
   businessType?: InputMaybe<CompanyBusinessTypeFilterComparison>;
   companySize?: InputMaybe<CompanyCompanySizeFilterComparison>;
   country?: InputMaybe<StringFieldComparison>;
@@ -3274,20 +3274,20 @@ export type QuoteFilterCompanyFilter = {
   id?: InputMaybe<IdFilterComparison>;
   industry?: InputMaybe<CompanyIndustryFilterComparison>;
   name?: InputMaybe<StringFieldComparison>;
-  or?: InputMaybe<Array<QuoteFilterCompanyFilter>>;
+  or?: InputMaybe<Array<FileFilterCompanyFilter>>;
   totalRevenue?: InputMaybe<IntFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   website?: InputMaybe<StringFieldComparison>;
 };
 
-export type QuoteFilterContactFilter = {
-  and?: InputMaybe<Array<QuoteFilterContactFilter>>;
+export type FileFilterContactFilter = {
+  and?: InputMaybe<Array<FileFilterContactFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   jobTitle?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
-  or?: InputMaybe<Array<QuoteFilterContactFilter>>;
+  or?: InputMaybe<Array<FileFilterContactFilter>>;
   phone?: InputMaybe<StringFieldComparison>;
   score?: InputMaybe<IntFieldComparison>;
   stage?: InputMaybe<ContactStageFilterComparison>;
@@ -3296,21 +3296,21 @@ export type QuoteFilterContactFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type QuoteFilterUserFilter = {
-  and?: InputMaybe<Array<QuoteFilterUserFilter>>;
+export type FileFilterUserFilter = {
+  and?: InputMaybe<Array<FileFilterUserFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
   jobTitle?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
-  or?: InputMaybe<Array<QuoteFilterUserFilter>>;
+  or?: InputMaybe<Array<FileFilterUserFilter>>;
   phone?: InputMaybe<StringFieldComparison>;
   role?: InputMaybe<UserRoleFilterComparison>;
   timezone?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type QuoteItem = {
+export type FileItem = {
   discount: Scalars["Int"]["output"];
   quantity: Scalars["Int"]["output"];
   title: Scalars["String"]["output"];
@@ -3318,20 +3318,20 @@ export type QuoteItem = {
   unitPrice: Scalars["Float"]["output"];
 };
 
-export type QuoteItemInput = {
+export type FileItemInput = {
   discount: Scalars["Int"]["input"];
   quantity: Scalars["Int"]["input"];
   title: Scalars["String"]["input"];
   unitPrice: Scalars["Float"]["input"];
 };
 
-export type QuoteSort = {
+export type FileSort = {
   direction: SortDirection;
-  field: QuoteSortFields;
+  field: FileSortFields;
   nulls?: InputMaybe<SortNulls>;
 };
 
-export type QuoteSortFields =
+export type FileSortFields =
   | "createdAt"
   | "id"
   | "status"
@@ -3339,55 +3339,55 @@ export type QuoteSortFields =
   | "total"
   | "updatedAt";
 
-/** Quote status */
-export type QuoteStatus = "ACCEPTED" | "DRAFT" | "SENT";
+/** File status */
+export type FileStatus = "ACCEPTED" | "DRAFT" | "SENT";
 
-export type QuoteStatusFilterComparison = {
-  eq?: InputMaybe<QuoteStatus>;
-  gt?: InputMaybe<QuoteStatus>;
-  gte?: InputMaybe<QuoteStatus>;
-  iLike?: InputMaybe<QuoteStatus>;
-  in?: InputMaybe<Array<QuoteStatus>>;
+export type FileStatusFilterComparison = {
+  eq?: InputMaybe<FileStatus>;
+  gt?: InputMaybe<FileStatus>;
+  gte?: InputMaybe<FileStatus>;
+  iLike?: InputMaybe<FileStatus>;
+  in?: InputMaybe<Array<FileStatus>>;
   is?: InputMaybe<Scalars["Boolean"]["input"]>;
   isNot?: InputMaybe<Scalars["Boolean"]["input"]>;
-  like?: InputMaybe<QuoteStatus>;
-  lt?: InputMaybe<QuoteStatus>;
-  lte?: InputMaybe<QuoteStatus>;
-  neq?: InputMaybe<QuoteStatus>;
-  notILike?: InputMaybe<QuoteStatus>;
-  notIn?: InputMaybe<Array<QuoteStatus>>;
-  notLike?: InputMaybe<QuoteStatus>;
+  like?: InputMaybe<FileStatus>;
+  lt?: InputMaybe<FileStatus>;
+  lte?: InputMaybe<FileStatus>;
+  neq?: InputMaybe<FileStatus>;
+  notILike?: InputMaybe<FileStatus>;
+  notIn?: InputMaybe<Array<FileStatus>>;
+  notLike?: InputMaybe<FileStatus>;
 };
 
-export type QuoteSubscriptionFilter = {
-  and?: InputMaybe<Array<QuoteSubscriptionFilter>>;
+export type FileSubscriptionFilter = {
+  and?: InputMaybe<Array<FileSubscriptionFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<QuoteSubscriptionFilter>>;
-  status?: InputMaybe<QuoteStatusFilterComparison>;
+  or?: InputMaybe<Array<FileSubscriptionFilter>>;
+  status?: InputMaybe<FileStatusFilterComparison>;
   title?: InputMaybe<StringFieldComparison>;
   total?: InputMaybe<FloatFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type QuoteUpdateFilter = {
-  and?: InputMaybe<Array<QuoteUpdateFilter>>;
+export type FileUpdateFilter = {
+  and?: InputMaybe<Array<FileUpdateFilter>>;
   createdAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<IdFilterComparison>;
-  or?: InputMaybe<Array<QuoteUpdateFilter>>;
-  status?: InputMaybe<QuoteStatusFilterComparison>;
+  or?: InputMaybe<Array<FileUpdateFilter>>;
+  status?: InputMaybe<FileStatusFilterComparison>;
   title?: InputMaybe<StringFieldComparison>;
   total?: InputMaybe<FloatFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type QuoteUpdateInput = {
+export type FileUpdateInput = {
   companyId?: InputMaybe<Scalars["ID"]["input"]>;
   contactId?: InputMaybe<Scalars["ID"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
-  items?: InputMaybe<Array<QuoteItemInput>>;
+  items?: InputMaybe<Array<FileItemInput>>;
   salesOwnerId?: InputMaybe<Scalars["ID"]["input"]>;
-  status?: InputMaybe<QuoteStatus>;
+  status?: InputMaybe<FileStatus>;
   tax?: InputMaybe<Scalars["Int"]["input"]>;
   title?: InputMaybe<Scalars["String"]["input"]>;
 };
@@ -3433,7 +3433,7 @@ export type Subscription = {
   createdDealStage: DealStage;
   createdEvent: Event;
   createdEventCategory: EventCategory;
-  createdQuote: Quote;
+  createdFile: File;
   createdTask: Task;
   createdTaskComment: TaskComment;
   createdTaskStage: TaskStage;
@@ -3447,7 +3447,7 @@ export type Subscription = {
   deletedManyDeals: DeleteManyResponse;
   deletedManyEventCategories: DeleteManyResponse;
   deletedManyEvents: DeleteManyResponse;
-  deletedManyQuotes: DeleteManyResponse;
+  deletedManyFiles: DeleteManyResponse;
   deletedManyTaskComments: DeleteManyResponse;
   deletedManyTaskStages: DeleteManyResponse;
   deletedManyTasks: DeleteManyResponse;
@@ -3461,7 +3461,7 @@ export type Subscription = {
   deletedOneDealStage: DealStageDeleteResponse;
   deletedOneEvent: EventDeleteResponse;
   deletedOneEventCategory: EventCategoryDeleteResponse;
-  deletedOneQuote: QuoteDeleteResponse;
+  deletedOneFile: FileDeleteResponse;
   deletedOneTask: TaskDeleteResponse;
   deletedOneTaskComment: TaskCommentDeleteResponse;
   deletedOneTaskStage: TaskStageDeleteResponse;
@@ -3475,7 +3475,7 @@ export type Subscription = {
   updatedManyDeals: UpdateManyResponse;
   updatedManyEventCategories: UpdateManyResponse;
   updatedManyEvents: UpdateManyResponse;
-  updatedManyQuotes: UpdateManyResponse;
+  updatedManyFiles: UpdateManyResponse;
   updatedManyTaskComments: UpdateManyResponse;
   updatedManyTaskStages: UpdateManyResponse;
   updatedManyTasks: UpdateManyResponse;
@@ -3489,7 +3489,7 @@ export type Subscription = {
   updatedOneDealStage: DealStage;
   updatedOneEvent: Event;
   updatedOneEventCategory: EventCategory;
-  updatedOneQuote: Quote;
+  updatedOneFile: File;
   updatedOneTask: Task;
   updatedOneTaskComment: TaskComment;
   updatedOneTaskStage: TaskStage;
@@ -3532,8 +3532,8 @@ export type SubscriptionCreatedEventCategoryArgs = {
   input?: InputMaybe<CreateEventCategorySubscriptionFilterInput>;
 };
 
-export type SubscriptionCreatedQuoteArgs = {
-  input?: InputMaybe<CreateQuoteSubscriptionFilterInput>;
+export type SubscriptionCreatedFileArgs = {
+  input?: InputMaybe<CreateFileSubscriptionFilterInput>;
 };
 
 export type SubscriptionCreatedTaskArgs = {
@@ -3588,8 +3588,8 @@ export type SubscriptionDeletedOneEventCategoryArgs = {
   input?: InputMaybe<DeleteOneEventCategorySubscriptionFilterInput>;
 };
 
-export type SubscriptionDeletedOneQuoteArgs = {
-  input?: InputMaybe<DeleteOneQuoteSubscriptionFilterInput>;
+export type SubscriptionDeletedOneFileArgs = {
+  input?: InputMaybe<DeleteOneFileSubscriptionFilterInput>;
 };
 
 export type SubscriptionDeletedOneTaskArgs = {
@@ -3644,8 +3644,8 @@ export type SubscriptionUpdatedOneEventCategoryArgs = {
   input?: InputMaybe<UpdateOneEventCategorySubscriptionFilterInput>;
 };
 
-export type SubscriptionUpdatedOneQuoteArgs = {
-  input?: InputMaybe<UpdateOneQuoteSubscriptionFilterInput>;
+export type SubscriptionUpdatedOneFileArgs = {
+  input?: InputMaybe<UpdateOneFileSubscriptionFilterInput>;
 };
 
 export type SubscriptionUpdatedOneTaskArgs = {
@@ -4442,11 +4442,11 @@ export type UpdateManyEventsInput = {
   update: EventUpdateInput;
 };
 
-export type UpdateManyQuotesInput = {
+export type UpdateManyFilesInput = {
   /** Filter used to find fields to update */
-  filter: QuoteUpdateFilter;
+  filter: FileUpdateFilter;
   /** The update to apply to all records found using the filter */
-  update: QuoteUpdateInput;
+  update: FileUpdateInput;
 };
 
 export type UpdateManyResponse = {
@@ -4583,16 +4583,16 @@ export type UpdateOneEventSubscriptionFilterInput = {
   filter: EventSubscriptionFilter;
 };
 
-export type UpdateOneQuoteInput = {
+export type UpdateOneFileInput = {
   /** The id of the record to update */
   id: Scalars["ID"]["input"];
   /** The update to apply. */
-  update: QuoteUpdateInput;
+  update: FileUpdateInput;
 };
 
-export type UpdateOneQuoteSubscriptionFilterInput = {
+export type UpdateOneFileSubscriptionFilterInput = {
   /** Specify to filter the records returned. */
-  filter: QuoteSubscriptionFilter;
+  filter: FileSubscriptionFilter;
 };
 
 export type UpdateOneTaskCommentInput = {

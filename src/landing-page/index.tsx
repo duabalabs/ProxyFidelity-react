@@ -6,13 +6,11 @@ import routerProvider from "@refinedev/react-router-v6";
 
 import { AboutSection } from "./AboutSection";
 import { ContactSection } from "./ContactSection";
-import { FeaturesSection } from "./FeaturesSection";
 import { FloatingButton } from "./FloatingButton";
 import { Header } from "./Header";
 import { HeroSection } from "./HeroSection";
 import { resources } from "./resources";
 import { ServicesSection } from "./ServicesSection";
-import { TeamSection } from "./TeamSection";
 import { ValuesSection } from "./ValuesSection";
 
 export default function LandingPage() {

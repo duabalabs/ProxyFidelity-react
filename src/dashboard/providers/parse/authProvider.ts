@@ -20,6 +20,7 @@ export const authProvider: AuthProvider = {
     } catch (error) {
       return { success: false, error };
     }
+    return undefined;
   },
 
   logout: async (): Promise<AuthActionResponse> => {

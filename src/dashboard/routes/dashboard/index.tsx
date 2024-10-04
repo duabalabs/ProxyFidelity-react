@@ -1,21 +1,14 @@
 import React from "react";
 
-import { useCustom, useList } from "@refinedev/core";
+import { useList } from "@refinedev/core";
 
 import { Col, Row } from "antd";
 
 import { CalendarUpcomingEvents } from "@/dashboard/components";
-import type { DashboardTotalCountsQuery } from "@/dashboard/graphql/types";
 
 import {
-  CompaniesMap,
-  DashboardDealsChart,
   DashboardLatestActivities,
-  DashboardTasksChart,
-  DashboardTotalCountCard,
-  DashboardTotalRevenueChart,
 } from "./components";
-import { DASHBOARD_TOTAL_COUNTS_QUERY } from "./queries";
 
 export const DashboardPage: React.FC = () => {
   const { data, isLoading, error } = useList({
@@ -25,14 +18,6 @@ export const DashboardPage: React.FC = () => {
       pageSize: 10,
     }
   });
-
-  console.log(data, isLoading, error);
-  // const { data, isLoading } = useCustom<DashboardTotalCountsQuery>({
-  //   url: "",
-  //   method: "get",
-  //   meta: { gqlQuery: DASHBOARD_TOTAL_COUNTS_QUERY },
-  // });
-
   return (
     <div className="page-container">
       <Row
@@ -49,33 +34,7 @@ export const DashboardPage: React.FC = () => {
         </Col>
       </Row>
 
-      <Row
-        gutter={[32, 32]}
-        style={{
-          marginTop: "32px",
-        }}
-      >
-        <Col
-          xs={24}
-          sm={24}
-          xl={8}
-          style={{
-            height: "448px",
-          }}
-        >
-          <DashboardTasksChart />
-        </Col>
-        <Col
-          xs={24}
-          sm={24}
-          xl={16}
-          style={{
-            height: "448px",
-          }}
-        >
-          <CompaniesMap />
-        </Col>
-      </Row>
+   
     </div>
   );
 };

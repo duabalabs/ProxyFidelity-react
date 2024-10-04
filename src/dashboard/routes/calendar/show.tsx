@@ -17,7 +17,6 @@ import dayjs from "dayjs";
 import { Text, UserTag } from "@/dashboard/components";
 
 import type { GetEventQuery } from "../../graphql/types";
-import { CALENDAR_GET_EVENT_QUERY } from "./queries";
 
 type Event = GetFields<GetEventQuery>;
 
@@ -26,10 +25,7 @@ export const CalendarShowPage: React.FC = () => {
   const { list } = useNavigation();
 
   const { query: queryResult } = useShow<Event>({
-    id,
-    meta: {
-      gqlQuery: CALENDAR_GET_EVENT_QUERY,
-    },
+    id
   });
 
   const { data, isLoading, isError, error } = queryResult;

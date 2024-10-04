@@ -5,7 +5,7 @@ import {
   CompanyDealsTable,
   CompanyInfoForm,
   CompanyNotes,
-  CompanyQuotesTable,
+  CompanyFilesTable,
   CompanyTitleForm,
 } from "./components";
 
@@ -26,7 +26,7 @@ export const CompanyEditPage = () => {
               marginTop: 32,
             }}
           />
-          <CompanyQuotesTable
+          <CompanyFilesTable
             style={{
               marginTop: 32,
             }}

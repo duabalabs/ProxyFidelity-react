@@ -5,6 +5,7 @@ export const FloatingButton = () => (
   <Button
     href="https://my.proxyfidelity.duckdns.org"
     type="primary"
+    target="_blank"
     shape="round"
     size="large"
     icon={<ArrowRightOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />}

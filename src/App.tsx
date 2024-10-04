@@ -20,7 +20,6 @@ import "./styles/oldbootstrap.css"
 
 const App: React.FC = () => {
   const hostname = window.location.hostname;
-
   return (
     <AlgoliaSearchWrapper>
       <BrowserRouter>
@@ -28,7 +27,7 @@ const App: React.FC = () => {
           <AntdApp>
             <DevtoolsProvider>
               
-              {hostname === 'my.proxyfidelity.duckdns.org' ? (
+              {hostname === 'my.proxyfidelity.duckdns.org' || hostname === "178.128.162.225" ? (
                 <>
                   {/* Dashboard Routes */}
                   <Dashboard />

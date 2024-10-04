@@ -1,9 +1,9 @@
-import { UserRoles } from '@types';
+
 import Parse from 'parse'
 export interface IUser extends Parse.User {
   username: string;
   email: string;
-  role: UserRoles;
+  role: string;
   phone: string;
   password: string;
   emailVerified: boolean;

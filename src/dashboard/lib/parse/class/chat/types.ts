@@ -1,9 +1,11 @@
 import Parse from 'parse'
-import { Message, Order, User } from "..";
+
+import { Message, Project, User } from "..";
+
 export interface IGetChatParams {
   type: CHAT_TYPE;
   users?: User[];
-  order?: Order;
+  project?: Project
   createIfNotExist?: boolean;
 }
 export enum CHAT_TYPE {
@@ -17,6 +19,6 @@ export interface IChat extends Parse.Object {
   users: User[];
   type: CHAT_TYPE;
   messages: Message[];
-  order?: Order;
+  project?: Project;
   supportTicket?: string;
 }
