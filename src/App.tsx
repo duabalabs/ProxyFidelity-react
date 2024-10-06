@@ -2,12 +2,11 @@ import { BrowserRouter } from "react-router-dom";
 
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 
-import { App as AntdApp, ConfigProvider } from "antd";
-
-import { themeConfig } from "@/config";
+import { App as AntdApp } from "antd";
 
 import Dashboard from "./dashboard";
 import { AlgoliaSearchWrapper } from "./dashboard/components";
+import { ConfigProvider } from "./dashboard/providers/config-provider";
 import LandingPage from "./landing-page";
 
 import "./utilities/init-dayjs";
@@ -23,7 +22,7 @@ const App: React.FC = () => {
   return (
     <AlgoliaSearchWrapper>
       <BrowserRouter>
-        <ConfigProvider theme={themeConfig}>
+        <ConfigProvider>
           <AntdApp>
             <DevtoolsProvider>
               
