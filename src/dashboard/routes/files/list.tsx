@@ -41,7 +41,7 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
         {
           field: "name",
           operator: "contains",
-          value: values.name,
+          value: (values as any).name,
         },
       ];
     },
