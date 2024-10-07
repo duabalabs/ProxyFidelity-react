@@ -27,14 +27,14 @@ import {
     CompanyListPage,
 } from "./routes/companies";
 import { DashboardPage } from "./routes/dashboard";
-import { ForgotPasswordPage } from "./routes/forgot-password";
-import { LoginPage } from "./routes/login";
 import {
     FilesCreatePage,
     FilesEditPage,
     FilesListPage,
     FilesShowPage,
 } from "./routes/files";
+import { ForgotPasswordPage } from "./routes/forgot-password";
+import { LoginPage } from "./routes/login";
 import { RegisterPage } from "./routes/register";
 import { UpdatePasswordPage } from "./routes/update-password";
 

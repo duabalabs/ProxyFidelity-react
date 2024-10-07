@@ -1,6 +1,6 @@
 import type { FC } from "react";
 
-import { ConfigProvider, Typography } from "antd";
+import { Typography } from "antd";
 
 export type TextProps = {
   size?:
@@ -60,15 +60,5 @@ const sizes = {
 };
 
 export const Text: FC<TextProps> = ({ size = "sm", children, ...rest }) => {
-  return (
-    <ConfigProvider
-      theme={{
-        token: {
-          ...sizes[size],
-        },
-      }}
-    >
-      <Typography.Text {...rest}>{children}</Typography.Text>
-    </ConfigProvider>
-  );
+  return <Typography.Text {...rest}>{children}</Typography.Text>;
 };

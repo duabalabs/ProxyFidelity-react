@@ -1,5 +1,7 @@
 import type { FC } from "react";
 
+import { Text } from "@/dashboard/components";
+
 type PaginationTotalProps = {
   total: number;
   entityName: string;
@@ -10,12 +12,8 @@ export const PaginationTotal: FC<PaginationTotalProps> = ({
   entityName,
 }) => {
   return (
-    <span
-      style={{
-        marginLeft: "16px",
-      }}
-    >
-      <span className="ant-text secondary">{total}</span> {entityName} in total
-    </span>
+    <Text style={{ marginLeft: "16px" }}>
+      {`${total} ${entityName} in total`}
+    </Text>
   );
 };

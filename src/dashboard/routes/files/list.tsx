@@ -1,4 +1,5 @@
 import type { FC, PropsWithChildren } from "react";
+import { useState } from "react";
 
 import {
   FilterDropdown,
@@ -14,37 +15,18 @@ import { Form, Grid, Input, Space, Spin, Table } from "antd";
 import dayjs from "dayjs";
 import debounce from "lodash/debounce";
 
-import {
-  ListTitleButton,
-  PaginationTotal,
-  Text,
-} from "@/dashboard/components";
-import type { FileStatus } from "@/dashboard/graphql/schema.types";
+import { ListTitleButton, PaginationTotal, Text } from "@/dashboard/components";
+import { FilePreviewModal } from "@/dashboard/components/file-preview";
 import type { FilesTableQuery } from "@/dashboard/graphql/types";
-import { useCompaniesSelect } from "@/dashboard/hooks/useCompaniesSelect";
-import { useUsersSelect } from "@/dashboard/hooks/useUsersSelect";
 
 import { QUOTES_TABLE_QUERY } from "./queries";
 
-type File = GetFieldsFromList<FilesTableQuery>;
-
-const statusOptions: { label: string; value: FileStatus }[] = [
-  {
-    label: "Draft",
-    value: "DRAFT",
-  },
-  {
-    label: "Sent",
-    value: "SENT",
-  },
-  {
-    label: "Accepted",
-    value: "ACCEPTED",
-  },
-];
+type File = GetFieldsFromList<FilesTableQuery>; //NOTE change to Parse subclass
 
 export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
   const screens = Grid.useBreakpoint();
+  const [file, setFile] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const {
     tableProps,
@@ -90,9 +72,6 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
     },
   });
 
-  const { selectProps: selectPropsCompanies } = useCompaniesSelect();
-
-  const { selectProps: selectPropsUsers } = useUsersSelect();
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     searchFormProps?.onFinish?.({
       name: e.target.value ?? "",
@@ -100,6 +79,15 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const debouncedOnChange = debounce(onSearch, 500);
+
+  const handleRowClick = (record) => {
+    if (record?.file) {
+      setFile(record);
+      setIsModalVisible(true);
+    } else {
+      console.error("File not found in the record.");
+    }
+  };
 
   return (
     <div className="page-container">
@@ -122,8 +110,13 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
                 <Form.Item name="name" noStyle>
                   <Input
                     size="large"
-                    // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
-                    prefix={<SearchOutlined className="anticon tertiary" />}
+                    prefix={
+                      <SearchOutlined
+                        className="anticon tertiary"
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
+                      />
+                    }
                     suffix={
                       <Spin
                         size="small"
@@ -154,11 +147,17 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
             ),
           }}
           rowKey="id"
+          onRow={(record) => {
+            return {
+              onClick: () => handleRowClick(record),
+              style: { cursor: "pointer" }, // Set cursor to pointer for clickable rows
+            };
+          }}
         >
           <Table.Column
-            dataIndex="title"
-            title="Title"
-            defaultFilteredValue={getDefaultFilter("title", filters)}
+            dataIndex="name"
+            title="Name"
+            defaultFilteredValue={getDefaultFilter("name", filters)}
             filterDropdown={(props) => (
               <FilterDropdown {...props}>
                 <Input placeholder="Search Name" />
@@ -168,50 +167,23 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
           <Table.Column<File>
             dataIndex={"createdAt"}
             title="Created at"
-            sorter
+            // sorter
             defaultSortOrder={getDefaultSortOrder("createdAt", sorters)}
             render={(value) => {
               return <Text>{dayjs(value).fromNow()}</Text>;
             }}
           />
-          {/* <Table.Column<File>
-            fixed="right"
-            title="Actions"
-            dataIndex="actions"
-            render={(_, record) => {
-              return (
-                <Space>
-                  <ShowButton
-                    hideText
-                    size="small"
-                    recordItemId={record.id}
-                    style={{
-                      backgroundColor: "transparent",
-                    }}
-                  />
-                  <EditButton
-                    hideText
-                    size="small"
-                    recordItemId={record.id}
-                    style={{
-                      backgroundColor: "transparent",
-                    }}
-                  />
-                  <DeleteButton
-                    hideText
-                    size="small"
-                    recordItemId={record.id}
-                    style={{
-                      backgroundColor: "transparent",
-                    }}
-                  />
-                </Space>
-              );
-            }}
-          /> */}
         </Table>
       </List>
       {children}
+
+      {file && (
+        <FilePreviewModal
+          isVisible={isModalVisible}
+          file={file}
+          onClose={() => setIsModalVisible(false)}
+        />
+      )}
     </div>
   );
 };
