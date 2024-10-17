@@ -19,7 +19,6 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = () => {
   const { mode, setMode } = useConfigProvider();
   const { token } = useToken();
   const { styles } = useStyles();
-console.log(setMode)
   const headerStyles: React.CSSProperties = {
     backgroundColor: token.colorBgElevated,
     display: "flex",

@@ -9,6 +9,7 @@ export * from "./layout/title";
 export * from "./list-title-button";
 export * from "./pagination-total";
 export * from "./participants";
+export * from './project-selector-modal'
 export * from "./select-option-with-avatar";
 export * from "./single-element-form";
 export * from "./tags";

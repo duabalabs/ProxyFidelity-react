@@ -5,7 +5,7 @@ import { useGetIdentity, useLogout } from "@refinedev/core";
 import { LogoutOutlined, SettingOutlined } from "@ant-design/icons";
 import { Button, Popover } from "antd";
 
-import type { User } from "@/dashboard/graphql/schema.types";
+import { User } from "@/dashboard/lib/parse";
 
 import { CustomAvatar } from "../custom-avatar";
 import { Text } from "../text";
@@ -29,7 +29,7 @@ export const CurrentUser: React.FC = () => {
           padding: "12px 20px",
         }}
       >
-        {user?.name}
+        {user?.getUsername()}
       </Text>
       <div
         style={{
@@ -75,8 +75,8 @@ export const CurrentUser: React.FC = () => {
         overlayStyle={{ zIndex: 999 }}
       >
         <CustomAvatar
-          name={user?.name}
-          src={user?.avatarUrl}
+          name={user?.getUsername()}
+          src={user?.get("avatarUrl")}
           size="default"
           style={{ cursor: "pointer" }}
         />

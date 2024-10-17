@@ -33,26 +33,6 @@ export const resources: IResourceItem[] = [
     },
   },
   {
-    name: "companies",
-    list: "/companies",
-    show: "/companies/:id",
-    create: "/companies/create",
-    edit: "/companies/edit/:id",
-    meta: {
-      label: "Companies",
-      // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
-      icon: <ShopOutlined />,
-    },
-  },
-  {
-    name: "companies",
-    identifier: "sales-companies",
-    create: "/scrumboard/sales/create/company/create",
-    meta: {
-      hide: true,
-    },
-  },
-  {
     name: "files",
     list: "/files",
     create: "/files/create",
@@ -60,6 +40,18 @@ export const resources: IResourceItem[] = [
     show: "/files/show/:id",
     meta: {
       label: "Files",
+      // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
+      icon: <ContainerOutlined />,
+    },
+  },
+  {
+    name: "invoices",
+    list: "/invoices",
+    create: "/invoices/create",
+    edit: "/invoices/edit/:id",
+    show: "/invoices/show/:id",
+    meta: {
+      label: "Invoices",
       // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
       icon: <ContainerOutlined />,
     },

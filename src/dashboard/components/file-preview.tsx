@@ -1,9 +1,10 @@
 import { Modal, Spin } from "antd";
-import Parse from "parse";
+
+import { ProjectFile } from "../lib/parse";
 
 type FilePreviewModalProps = {
   isVisible: boolean;
-  file: any; //NOTE change to Parse subclass
+  file: ProjectFile;
   onClose: () => void;
 };
 
@@ -13,7 +14,9 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
   onClose,
 }) => {
   const name = file?.name ?? "File Content";
-  const url = file?.file?.url as unknown as string;
+  const originalUrl = file?.originalUrl;
+  const cdnUrl = file?.cdnUrl;
+  const url = cdnUrl || originalUrl;
   return (
     <Modal
       open={isVisible}

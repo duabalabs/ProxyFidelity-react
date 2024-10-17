@@ -3,10 +3,10 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import { ErrorComponent, useNotificationProvider } from "@refinedev/antd";
 import { Authenticated, Refine } from "@refinedev/core";
 import routerProvider, {
-    CatchAllNavigate,
-    DocumentTitleHandler,
-    NavigateToResource,
-    UnsavedChangesNotifier,
+  CatchAllNavigate,
+  DocumentTitleHandler,
+  NavigateToResource,
+  UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
 
 import { FullScreenLoading, Layout } from "./components";
@@ -16,170 +16,128 @@ import { authProvider, dataProvider } from "./providers/parse";
 import { resources } from "./resources";
 import { SettingsPage } from "./routes/administration";
 import {
-    CalendarCreatePage,
-    CalendarEditPage,
-    CalendarPageWrapper,
-    CalendarShowPage,
+  CalendarCreatePage,
+  CalendarEditPage,
+  CalendarPageWrapper,
+  CalendarShowPage,
 } from "./routes/calendar";
-import {
-    CompanyCreatePage,
-    CompanyEditPage,
-    CompanyListPage,
-} from "./routes/companies";
 import { DashboardPage } from "./routes/dashboard";
 import {
-    FilesCreatePage,
-    FilesEditPage,
-    FilesListPage,
-    FilesShowPage,
+  FilesCreatePage,
+  FilesEditPage,
+  FilesListPage,
+  FilesShowPage,
 } from "./routes/files";
 import { ForgotPasswordPage } from "./routes/forgot-password";
 import { LoginPage } from "./routes/login";
 import { RegisterPage } from "./routes/register";
 import { UpdatePasswordPage } from "./routes/update-password";
 
-
 const Dashboard: React.FC = () => {
-    const parseConfig: IParseServerAPICred = {
-        serverURL: import.meta.env.VITE_PARSE_SERVER_URL,
-        appId: import.meta.env.VITE_PARSE_APP_ID,
-        javascriptKey: import.meta.env.VITE_PARSE_JAVASCRIPT_KEY,
-      };
-      const { loadingParse: initialLoad } = useParseConnect(parseConfig);
-    // This hook is used to automatically login the user.
-    // We use this hook to skip the login page and demonstrate the application more quickly.
-    const { loading } = useAutoLoginForDemo();
+  const parseConfig: IParseServerAPICred = {
+    serverURL: import.meta.env.VITE_PARSE_SERVER_URL,
+    appId: import.meta.env.VITE_PARSE_APP_ID,
+    javascriptKey: import.meta.env.VITE_PARSE_JAVASCRIPT_KEY,
+  };
+  const { loadingParse: initialLoad } = useParseConnect(parseConfig);
+  // This hook is used to automatically login the user.
+  // We use this hook to skip the login page and demonstrate the application more quickly.
+  const { loading } = useAutoLoginForDemo();
 
-    if (loading || initialLoad) {
-        return <FullScreenLoading />;
-    }
+  if (loading || initialLoad) {
+    return <FullScreenLoading />;
+  }
 
-    return (
-        <Refine
-            authProvider={authProvider}
-            dataProvider={dataProvider}
-            // liveProvider={liveProvider}
-            routerProvider={routerProvider}
-            resources={resources}
-            notificationProvider={useNotificationProvider}
-            options={{
-                liveMode: "auto",
-                syncWithLocation: true,
-                warnWhenUnsavedChanges: true,
-            }}
+  return (
+    <Refine
+      authProvider={authProvider}
+      dataProvider={dataProvider}
+      // liveProvider={liveProvider}
+      routerProvider={routerProvider}
+      resources={resources}
+      notificationProvider={useNotificationProvider}
+      options={{
+        liveMode: "auto",
+        syncWithLocation: true,
+        warnWhenUnsavedChanges: true,
+      }}
+    >
+      <Routes>
+        <Route
+          element={
+            <Authenticated
+              key="authenticated-layout"
+              fallback={<CatchAllNavigate to="/login" />}
+            >
+              <Layout>
+                <Outlet />
+              </Layout>
+            </Authenticated>
+          }
         >
-            <Routes>
-                <Route
-                    element={
-                        <Authenticated
-                            key="authenticated-layout"
-                            fallback={<CatchAllNavigate to="/login" />}
-                        >
-                            <Layout>
-                                <Outlet />
-                            </Layout>
-                        </Authenticated>
-                    }
-                >
-                    <Route index element={<DashboardPage />} />
-                    <Route
-                        path="/calendar"
-                        element={
-                            <CalendarPageWrapper>
-                                <Outlet />
-                            </CalendarPageWrapper>
-                        }
-                    >
-                        <Route index element={null} />
-                        <Route path="show/:id" element={<CalendarShowPage />} />
-                        <Route path="edit/:id" element={<CalendarEditPage />} />
-                        <Route path="create" element={<CalendarCreatePage />} />
-                    </Route>
-                    <Route
-                        path="/companies"
-                        element={
-                            <CompanyListPage>
-                                <Outlet />
-                            </CompanyListPage>
-                        }
-                    >
-                        <Route path="create" element={<CompanyCreatePage />} />
-                    </Route>
-                    <Route
-                        path="/companies/edit/:id"
-                        element={<CompanyEditPage />}
-                    />
+          <Route index element={<DashboardPage />} />
+          <Route
+            path="/calendar"
+            element={
+              <CalendarPageWrapper>
+                <Outlet />
+              </CalendarPageWrapper>
+            }
+          >
+            <Route index element={null} />
+            <Route path="show/:id" element={<CalendarShowPage />} />
+            <Route path="edit/:id" element={<CalendarEditPage />} />
+            <Route path="create" element={<CalendarCreatePage />} />
+          </Route>
 
-                    <Route
-                        path="/files"
-                        element={
-                            <FilesListPage>
-                                <Outlet />
-                            </FilesListPage>
-                        }
-                    >
-                        <Route
-                            path="create"
-                            element={
-                                <FilesCreatePage>
-                                    <Outlet />
-                                </FilesCreatePage>
-                            }
-                        >
-                            <Route
-                                path="company-create"
-                                element={<CompanyCreatePage isOverModal />}
-                            />
-                        </Route>
-                        <Route
-                            path="edit/:id"
-                            element={
-                                <FilesEditPage>
-                                    <Outlet />
-                                </FilesEditPage>
-                            }
-                        >
-                            <Route
-                                path="company-create"
-                                element={<CompanyCreatePage isOverModal />}
-                            />
-                        </Route>
-                    </Route>
-                    <Route
-                        path="/files/show/:id"
-                        element={<FilesShowPage />}
-                    />
-                    <Route path="/administration" element={<Outlet />}>
-                        <Route path="settings" element={<SettingsPage />} />
-                    </Route>
-                    <Route path="*" element={<ErrorComponent />} />
-                </Route>
-                <Route
-                    element={
-                        <Authenticated
-                            key="authenticated-auth"
-                            fallback={<Outlet />}
-                        >
-                            <NavigateToResource resource="dashboard" />
-                        </Authenticated>
-                    }
-                >
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route
-                        path="/forgot-password"
-                        element={<ForgotPasswordPage />}
-                    />
-                    <Route
-                        path="/update-password"
-                        element={<UpdatePasswordPage />}
-                    />
-                </Route>
-            </Routes>
-            <UnsavedChangesNotifier />
-            <DocumentTitleHandler />
-        </Refine>
-    );
+          <Route
+            path="/files"
+            element={
+              <FilesListPage>
+                <Outlet />
+              </FilesListPage>
+            }
+          >
+            <Route
+              path="create"
+              element={
+                <FilesCreatePage>
+                  <Outlet />
+                </FilesCreatePage>
+              }
+            ></Route>
+            <Route
+              path="edit/:id"
+              element={
+                <FilesEditPage>
+                  <Outlet />
+                </FilesEditPage>
+              }
+            ></Route>
+          </Route>
+          <Route path="/files/show/:id" element={<FilesShowPage />} />
+          <Route path="/administration" element={<Outlet />}>
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+          <Route path="*" element={<ErrorComponent />} />
+        </Route>
+        <Route
+          element={
+            <Authenticated key="authenticated-auth" fallback={<Outlet />}>
+              <NavigateToResource resource="dashboard" />
+            </Authenticated>
+          }
+        >
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/update-password" element={<UpdatePasswordPage />} />
+        </Route>
+      </Routes>
+      <UnsavedChangesNotifier />
+      <DocumentTitleHandler />
+    </Refine>
+  );
 };
 
 export default Dashboard;

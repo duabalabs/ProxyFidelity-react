@@ -21,7 +21,6 @@ export const ListTitleButton: FC<ListTitleButtonProps> = ({
   const { pathname } = useLocation();
   const { createUrl } = useNavigation();
   const screens = Grid.useBreakpoint();
-
   return (
     <Button
       type="primary"

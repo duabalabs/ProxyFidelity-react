@@ -1,61 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
 
 import type { RefineLayoutThemedTitleProps } from "@refinedev/antd";
-import { useLink } from "@refinedev/core";
 
-import { Space, theme, Typography } from "antd";
+import { Button, Flex, Space, theme, Typography } from "antd";
+
+import { ProjectSelectorModal } from "@/dashboard/components";
+import { useAppData } from "@/dashboard/context/app-data";
 
 import { Logo } from "./logo";
 
 const { useToken } = theme;
-
-const name = "DuabaLabs";
 
 export const Title: React.FC<RefineLayoutThemedTitleProps> = ({
   collapsed,
   wrapperStyles,
 }) => {
   const { token } = useToken();
-  const Link = useLink();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { activeProject } = useAppData();
 
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
   return (
-    <Link
-      to="/login"
+    <div
       style={{
         display: "inline-block",
         textDecoration: "none",
       }}
     >
-      <Space
-        style={{
-          display: "flex",
-          alignItems: "center",
-          fontSize: "inherit",
-          ...wrapperStyles,
-        }}
-      >
-        <div
+      <Button onClick={handleOpenModal} type="text">
+        <Space
           style={{
-            height: "24px",
-            width: "24px",
-            color: token.colorPrimary,
+            display: "flex",
+            alignItems: "center",
+            fontSize: "inherit",
+            ...wrapperStyles,
           }}
         >
-          <Logo />
-        </div>
-
-        {!collapsed && (
-          <Typography.Title
+          <div
             style={{
-              fontSize: "inherit",
-              marginBottom: 0,
-              fontWeight: 700,
+              height: "24px",
+              width: "24px",
+              color: token.colorPrimary,
             }}
           >
-            {name}
-          </Typography.Title>
-        )}
-      </Space>
-    </Link>
+            <Logo />
+          </div>
+
+          {!collapsed && (
+            <Flex vertical>
+              <Typography.Title
+                style={{
+                  fontSize: "inherit",
+                  marginBottom: 0,
+                  fontWeight: 700,
+                }}
+              >
+                {activeProject?.name}
+              </Typography.Title>
+              <Typography.Text
+                style={{
+                  fontSize: "smaller",
+                }}
+              >
+                {"Select Project"}
+              </Typography.Text>
+            </Flex>
+          )}
+        </Space>
+      </Button>
+
+      <ProjectSelectorModal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+      />
+    </div>
   );
 };

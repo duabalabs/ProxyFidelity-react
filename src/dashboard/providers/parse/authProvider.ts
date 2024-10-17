@@ -58,11 +58,7 @@ export const authProvider: AuthProvider = {
   getIdentity: async (): Promise<IdentityResponse> => {
     const user = Parse.User.current();
     if (user) {
-      return {
-        id: user.id,
-        username: user.getUsername(),
-        email: user.getEmail() ?? undefined,
-      };
+      return user;
     }
     return null;
   },

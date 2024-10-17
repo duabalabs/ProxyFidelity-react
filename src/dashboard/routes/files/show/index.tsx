@@ -7,7 +7,7 @@ import { EditOutlined, LeftOutlined } from "@ant-design/icons";
 import { Button, Space } from "antd";
 
 import { CustomAvatar, FullScreenLoading, Text } from "@/dashboard/components";
-import type { File } from "@/dashboard/graphql/schema.types";
+import { ProjectFile } from "@/dashboard/lib/parse";
 
 import {
   FilesFormModal,
@@ -15,7 +15,6 @@ import {
   ShowDescription,
   StatusIndicator,
 } from "../components";
-import { QUOTES_GET_QUOTE_QUERY } from "../queries";
 import styles from "./index.module.css";
 
 const PdfExport = lazy(() => import("../components/pdf-export"));
@@ -25,13 +24,13 @@ export const FilesShowPage = () => {
 
   const params = useParams<{ id: string }>();
 
-  const { data, isLoading } = useOne<File>({
-    resource: "files",
+  const { data, isLoading } = useOne<ProjectFile>({
+    resource: "ProjectFile",
     id: params.id,
     liveMode: "off",
-    meta: {
-      gqlQuery: QUOTES_GET_QUOTE_QUERY,
-    },
+    // meta: {
+    //   gqlQuery: QUOTES_GET_QUOTE_QUERY,
+    // },
   });
 
   if (isLoading || !data?.data) {
