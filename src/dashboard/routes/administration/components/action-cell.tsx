@@ -63,9 +63,11 @@ export const ActionCell = ({ record }: { record: Audit }) => {
           onOk={() => setOpened(false)}
           onCancel={() => setOpened(false)}
           style={{ minWidth: "60vw" }}
-          bodyStyle={{
-            maxHeight: "500px",
-            overflow: "auto",
+          styles={{
+            body: {
+              maxHeight: "500px",
+              overflow: "auto",
+            },
           }}
         >
           <Table

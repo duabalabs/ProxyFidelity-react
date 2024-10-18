@@ -10,7 +10,7 @@ import {
 import { getDefaultFilter } from "@refinedev/core";
 
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Form, Grid, Input, Modal, Space, Spin, Table } from "antd";
+import { Button, Form, Grid, Input, Space, Spin, Table } from "antd";
 import dayjs from "dayjs";
 import debounce from "lodash/debounce";
 
@@ -19,18 +19,11 @@ import { FilePreviewModal } from "@/dashboard/components/file-preview";
 import { useAppData } from "@/dashboard/context/app-data";
 import { ProjectFile } from "@/dashboard/lib/parse";
 
-import { UploadProgressModal } from "../components/unfinished-upload-modal";
-import { checkUnfinishedUploads } from "../helper";
-
 export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
   const screens = Grid.useBreakpoint();
   const [file, setFile] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { activeProject } = useAppData();
-  const [unfinishedUploadsModalVisible, setUnfinishedUploadsModalVisible] =
-    useState(false);
-  const [unfinishedUploads, setUnfinishedUploads] = useState([]);
-  const [fileListForUpload, setFileListForUpload] = useState([]); // For resumable uploads
 
   const {
     tableProps,
@@ -85,14 +78,6 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  // Load unfinished uploads from localStorage
-  const loadUnfinishedUploads = () => {
-    const uploads = checkUnfinishedUploads(); // Fetch unfinished uploads
-    setUnfinishedUploads(uploads);
-    setFileListForUpload(uploads); // Set the files for resumable upload
-    setUnfinishedUploadsModalVisible(true);
-  };
-
   return (
     <div className="page-container">
       <List
@@ -104,12 +89,6 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
                 marginTop: screens.xs ? "1.6rem" : undefined,
               }}
             >
-              {/* Existing Upload Button */}
-              <ListTitleButton buttonText="Add file" toPath="files" />
-
-              {/* New Button for Unfinished Uploads */}
-              <Button onClick={loadUnfinishedUploads}>Resume Uploads</Button>
-
               <Form
                 {...searchFormProps}
                 initialValues={{
@@ -194,13 +173,6 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
           onClose={() => setIsModalVisible(false)}
         />
       )}
-
-      {/* Upload Progress Modal */}
-      <UploadProgressModal
-        fileList={fileListForUpload} // Pass unfinished uploads here
-        activeProject={activeProject}
-        closeModal={() => setUnfinishedUploadsModalVisible(false)}
-      />
     </div>
   );
 };

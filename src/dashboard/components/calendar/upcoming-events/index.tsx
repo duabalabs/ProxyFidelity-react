@@ -97,9 +97,11 @@ export const CalendarUpcomingEvents: React.FC<CalendarUpcomingEventsProps> = ({
 
   return (
     <Card
-      headStyle={{ padding: "8px 16px" }}
-      bodyStyle={{
-        padding: "0 1rem",
+      styles={{
+        body: {
+          padding: "0 1rem",
+        },
+        header: { padding: "8px 16px" },
       }}
       title={
         <div

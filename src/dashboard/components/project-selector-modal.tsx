@@ -24,7 +24,7 @@ export const ProjectSelectorModal = ({ isVisible, onClose }) => {
   );
 
   return (
-    <Modal visible={isVisible} onCancel={onClose} title="Select a Project">
+    <Modal open={isVisible} onCancel={onClose} title="Select a Project">
       <List
         dataSource={projects?.data}
         renderItem={(project) => (

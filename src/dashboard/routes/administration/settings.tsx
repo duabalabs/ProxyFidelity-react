@@ -35,9 +35,7 @@ export const SettingsPage = () => {
         }}
       >
         <Logo width={96} height={96} />
-        <Text style={{ fontSize: "32px", fontWeight: 700 }}>
-          DuabaLabs
-        </Text>
+        <Text style={{ fontSize: "32px", fontWeight: 700 }}>DuabaLabs</Text>
       </Space>
       <Row
         gutter={[32, 32]}
@@ -125,10 +123,12 @@ const UsersTable = () => {
 
   return (
     <Card
-      bodyStyle={{ padding: 0 }}
-      headStyle={{
-        borderBottom: "1px solid #D9D9D9",
-        marginBottom: "1px",
+      styles={{
+        body: { padding: 0 },
+        header: {
+          borderBottom: "1px solid #D9D9D9",
+          marginBottom: "1px",
+        },
       }}
       title={
         <Space size="middle">
@@ -179,7 +179,7 @@ const UsersTable = () => {
           defaultFilteredValue={getDefaultFilter(
             "jobTitle",
             filters,
-            "contains",
+            "contains"
           )}
           // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
           filterIcon={<SearchOutlined />}
@@ -249,11 +249,13 @@ export const CompanyInfo = () => {
           <Text>Company info</Text>
         </Space>
       }
-      headStyle={{
-        padding: "1rem",
-      }}
-      bodyStyle={{
-        padding: "0",
+      styles={{
+        body: {
+          padding: "0",
+        },
+        header: {
+          padding: "1rem",
+        },
       }}
     >
       <div className={styles.list}>

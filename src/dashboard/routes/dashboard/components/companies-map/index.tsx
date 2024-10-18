@@ -18,9 +18,11 @@ export const CompaniesMap: React.FC = () => {
   return (
     <Card
       style={{ height: "100%" }}
-      bodyStyle={{
-        padding: 0,
-        overflow: "hidden",
+      styles={{
+        body: {
+          padding: 0,
+          overflow: "hidden",
+        },
       }}
       title={
         <div

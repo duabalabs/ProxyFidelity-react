@@ -148,8 +148,10 @@ export const Sider: React.FC = () => {
           placement="left"
           closable={false}
           width={256}
-          bodyStyle={{
-            padding: 0,
+          styles={{
+            body: {
+              padding: 0,
+            },
           }}
           maskClosable={true}
         >

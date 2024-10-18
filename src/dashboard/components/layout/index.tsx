@@ -2,32 +2,21 @@ import React from "react";
 
 import { ThemedLayoutContextProvider } from "@refinedev/antd";
 
-import { Grid, Layout as AntdLayout } from "antd";
+import { Layout as AntdLayout } from "antd";
 
+import { UploadProvider } from "@/dashboard/context";
 import { AppDataProvider } from "@/dashboard/context/app-data";
 
-import { Header } from "./header";
-import { Sider } from "./sider";
+import { Home } from "./home";
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const breakpoint = Grid.useBreakpoint();
-  const isSmall = typeof breakpoint.sm === "undefined" ? true : breakpoint.sm;
-
   return (
     <ThemedLayoutContextProvider>
       <AntdLayout hasSider style={{ minHeight: "100vh" }}>
         <AppDataProvider>
-          <Sider />
-          <AntdLayout>
-            <Header />
-            <AntdLayout.Content
-              style={{
-                padding: isSmall ? 32 : 16,
-              }}
-            >
-              {children}
-            </AntdLayout.Content>
-          </AntdLayout>
+          <UploadProvider>
+            <Home>{children}</Home>
+          </UploadProvider>
         </AppDataProvider>
       </AntdLayout>
     </ThemedLayoutContextProvider>

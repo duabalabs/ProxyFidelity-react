@@ -8,8 +8,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, Form, message, Modal, Upload } from "antd";
 
 import { useAppData } from "@/dashboard/context/app-data";
-
-import { UploadProgressModal } from "./unfinished-upload-modal";
+import { useUpload } from "@/dashboard/context/upload-data"; // Import the upload context
 
 export const FilesFormModal = ({
   action,
@@ -20,10 +19,8 @@ export const FilesFormModal = ({
   const params = useParams<{ id: string }>();
   const { list } = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [uploadProgressModalVisible, setUploadProgressModalVisible] =
-    useState(false); // Manage the visibility of the progress modal
-  const [fileListForUpload, setFileListForUpload] = useState([]); // Files to upload
   const { activeProject } = useAppData();
+  const { addFiles } = useUpload();
 
   const { formProps, modalProps, close, onFinish } = useModalForm({
     resource: "ProjectFile",
@@ -36,28 +33,34 @@ export const FilesFormModal = ({
 
   const form = formProps.form;
 
+  // Handle the form submission and adding files to the upload queue
   const handleOnFinish = useCallback(
     async (values) => {
       const { file } = values;
       setLoading(true);
-      setFileListForUpload(file); // Set the files for the modal
-      setUploadProgressModalVisible(true); // Show the upload progress modal
 
       try {
-        // We will handle the actual upload inside UploadProgressModal
+        // Add selected files to the upload queue with the project ID
+        addFiles(
+          file.map((f) => f.originFileObj),
+          activeProject.id
+        );
+        message.success("Files added to upload queue.");
+        form.resetFields(); // Reset the form after successful addition
+        close(); // Close the modal after files are added to the queue
+        list("files", "replace"); // Refresh the file list
       } catch (error) {
-        console.error(`Error uploading files`, error);
-        message.error("Failed to upload the file(s). Please try again.");
+        console.error(`Error adding files to upload queue`, error);
+        message.error("Failed to add the file(s) to the upload queue.");
       } finally {
         setLoading(false);
       }
     },
-    [activeProject]
+    [activeProject, addFiles, form, close, list]
   );
 
   const handleBeforeUpload = () => {
-    setUploadProgressModalVisible(false);
-    return false;
+    return false; // Prevent default auto-upload behavior
   };
 
   return (
@@ -100,14 +103,6 @@ export const FilesFormModal = ({
           </Upload>
         </Form.Item>
       </Form>
-
-      {uploadProgressModalVisible && (
-        <UploadProgressModal
-          fileList={fileListForUpload} // Pass file list for upload
-          activeProject={activeProject}
-          closeModal={() => setUploadProgressModalVisible(false)}
-        />
-      )}
     </Modal>
   );
 };

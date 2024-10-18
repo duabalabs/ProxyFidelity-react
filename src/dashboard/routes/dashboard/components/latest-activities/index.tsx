@@ -72,9 +72,11 @@ export const DashboardLatestActivities: React.FC<{ limit?: number }> = ({
 
   return (
     <Card
-      headStyle={{ padding: "16px" }}
-      bodyStyle={{
-        padding: "0 1rem",
+      styles={{
+        body: {
+          padding: "0 1rem",
+        },
+        header: { padding: "16px" },
       }}
       title={
         <div

@@ -1,28 +1,28 @@
-import { Card, Col, Row, Typography } from 'antd';
-import { motion } from 'framer-motion';
+import { Card, Col, Row, Typography } from "antd";
+import { motion } from "framer-motion";
 
 const { Title, Paragraph } = Typography;
 
 const values = [
   {
-    title: 'Transparency',
+    title: "Transparency",
     description:
-      'We are committed to providing our clients with complete transparency about our services and how we manage their investments.',
-    imgSrc: '/assets/img/values/transparency.webp',
+      "We are committed to providing our clients with complete transparency about our services and how we manage their investments.",
+    imgSrc: "/assets/img/values/transparency.webp",
     delay: 0.2,
   },
   {
-    title: 'Accountability',
+    title: "Accountability",
     description:
-      'We hold ourselves accountable for the quality of our work and the results we deliver to our clients.                             ',
-    imgSrc: '/assets/img/values/accountability.webp',
+      "We hold ourselves accountable for the quality of our work and the results we deliver to our clients.                             ",
+    imgSrc: "/assets/img/values/accountability.webp",
     delay: 0.4,
   },
   {
-    title: 'Excellence',
+    title: "Excellence",
     description:
-      'We strive to provide our clients with the highest level of service possible, ensuring excellence in every project.                   ',
-    imgSrc: '/assets/img/values/excellence.webp',
+      "We strive to provide our clients with the highest level of service possible, ensuring excellence in every project.                   ",
+    imgSrc: "/assets/img/values/excellence.webp",
     delay: 0.6,
   },
 ];
@@ -61,33 +61,45 @@ export const ValuesSection = () => {
                   bordered={false}
                   className="value-card"
                   style={{
-                    borderRadius: '15px',
-                    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
-                    overflow: 'hidden',
-                    backgroundColor: '#ffffff',
-                    transition: 'transform 0.3s',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
+                    borderRadius: "15px",
+                    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
+                    overflow: "hidden",
+                    backgroundColor: "#ffffff",
+                    transition: "transform 0.3s",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
                   }}
-                  bodyStyle={{ padding: '24px', display: 'flex', flexDirection: 'column' }}
+                  styles={{
+                    body: {
+                      padding: "24px",
+                      display: "flex",
+                      flexDirection: "column",
+                    },
+                  }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginBottom: "16px",
+                    }}
+                  >
                     <motion.img
                       src={value.imgSrc}
                       alt={value.title}
                       className="object-cover"
                       style={{
-                        width: '150px',
-                        height: '150px',
-                        borderRadius: '10%',
-                        transition: 'transform 0.3s',
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "10%",
+                        transition: "transform 0.3s",
                       }}
                       whileHover={{ scale: 1.05 }}
                     />
                   </div>
-                  <div style={{ textAlign: 'center', flexGrow: 1 }}>
+                  <div style={{ textAlign: "center", flexGrow: 1 }}>
                     <Title level={3} className="text-blue-800 mb-4">
                       {value.title}
                     </Title>

@@ -1,14 +1,12 @@
-import Parse from 'parse'
+import Parse from "parse";
 
-import { Project } from '../project';
+import { Project } from "../project";
 
 export interface IProjectFile extends Parse.Object {
   project?: Project;
-  file?: Parse.File;
-  name?: string;
-  type?: string;
-  url?: string;
+  fileName?: string;
+  fileType?: string;
   description?: string;
-  originalUrl?: string;
+  fileUrl?: string;
   cdnUrl?: string;
 }

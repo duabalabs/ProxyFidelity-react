@@ -89,11 +89,13 @@ export const AccountSettings = ({ opened, setOpened, userId }: Props) => {
       <Drawer
         open={opened}
         width={756}
-        bodyStyle={{
-          background: "#f5f5f5",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+        styles={{
+          body: {
+            background: "#f5f5f5",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
         }}
       >
         <Spin />
@@ -180,8 +182,7 @@ export const AccountSettings = ({ opened, setOpened, userId }: Props) => {
               <Text size="sm">User profile</Text>
             </Space>
           }
-          headStyle={{ padding: "0 12px" }}
-          bodyStyle={{ padding: "0" }}
+          styles={{ body: { padding: "0" }, header: { padding: "0 12px" } }}
         >
           <SingleElementForm
             useFormProps={{
@@ -262,8 +263,7 @@ export const AccountSettings = ({ opened, setOpened, userId }: Props) => {
               <Text size="sm">Security</Text>
             </Space>
           }
-          headStyle={{ padding: "0 12px" }}
-          bodyStyle={{ padding: "0" }}
+          styles={{ body: { padding: "0" }, header: { padding: "0 12px" } }}
         >
           <SingleElementForm
             useFormProps={{

@@ -60,8 +60,10 @@ export const DashboardTotalCountCard: React.FC<{
   return (
     <Card
       style={{ height: "96px", padding: 0 }}
-      bodyStyle={{
-        padding: "8px 8px 8px 12px",
+      styles={{
+        body: {
+          padding: "8px 8px 8px 12px",
+        },
       }}
       size="small"
     >

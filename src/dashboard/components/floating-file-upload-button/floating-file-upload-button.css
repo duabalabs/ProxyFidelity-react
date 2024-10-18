@@ -1,0 +1,13 @@
+.floating-button-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-button {
+  position: absolute;
+}

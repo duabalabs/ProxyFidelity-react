@@ -13,8 +13,8 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
   file,
   onClose,
 }) => {
-  const name = file?.name ?? "File Content";
-  const originalUrl = file?.originalUrl;
+  const name = file?.fileName ?? "File Content";
+  const originalUrl = file?.fileUrl;
   const cdnUrl = file?.cdnUrl;
   const url = cdnUrl || originalUrl;
   return (
