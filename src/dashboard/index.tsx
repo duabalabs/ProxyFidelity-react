@@ -22,12 +22,7 @@ import {
   CalendarShowPage,
 } from "./routes/calendar";
 import { DashboardPage } from "./routes/dashboard";
-import {
-  FilesCreatePage,
-  FilesEditPage,
-  FilesListPage,
-  FilesShowPage,
-} from "./routes/files";
+import { FilesCreatePage, FilesEditPage, FilesListPage } from "./routes/files";
 import { ForgotPasswordPage } from "./routes/forgot-password";
 import { LoginPage } from "./routes/login";
 import { RegisterPage } from "./routes/register";
@@ -115,7 +110,6 @@ const Dashboard: React.FC = () => {
               }
             ></Route>
           </Route>
-          <Route path="/files/show/:id" element={<FilesShowPage />} />
           <Route path="/administration" element={<Outlet />}>
             <Route path="settings" element={<SettingsPage />} />
           </Route>

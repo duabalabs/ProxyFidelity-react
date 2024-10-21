@@ -15,7 +15,7 @@ export const FilesFormModal = ({
   redirect,
   onCancel,
   onMutationSuccess,
-}) => {
+}: any) => {
   const params = useParams<{ id: string }>();
   const { list } = useNavigation();
   const [loading, setLoading] = useState(false);

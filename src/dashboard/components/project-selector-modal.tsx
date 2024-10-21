@@ -1,8 +1,7 @@
-import { useCallback } from "react";
-
-import { useList } from "@refinedev/core";
+import { useCallback, useEffect, useState } from "react";
 
 import { Button, List, Modal } from "antd";
+import Parse from "parse";
 
 import { useAppData } from "@/dashboard/context/app-data";
 
@@ -10,10 +9,16 @@ import { Project } from "../lib/parse";
 
 export const ProjectSelectorModal = ({ isVisible, onClose }) => {
   const { updateActiveProject } = useAppData();
+  const [projects, setProjects] = useState([]);
 
-  const { data: projects, isLoading } = useList<Project>({
-    resource: "Project",
-  });
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const query = new Parse.Query(Project);
+      const results = await query.find();
+      setProjects(results);
+    };
+    fetchProjects();
+  }, []);
 
   const handleProjectSelect = useCallback(
     async (project) => {
@@ -26,7 +31,7 @@ export const ProjectSelectorModal = ({ isVisible, onClose }) => {
   return (
     <Modal open={isVisible} onCancel={onClose} title="Select a Project">
       <List
-        dataSource={projects?.data}
+        dataSource={projects}
         renderItem={(project) => (
           <List.Item
             actions={[
