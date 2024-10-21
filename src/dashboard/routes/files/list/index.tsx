@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   FilterDropdown,
@@ -10,7 +10,7 @@ import {
 import { getDefaultFilter } from "@refinedev/core";
 
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Form, Grid, Input, Space, Spin, Table } from "antd";
+import { Form, Grid, Input, Space, Spin, Table } from "antd";
 import dayjs from "dayjs";
 import debounce from "lodash/debounce";
 
@@ -144,7 +144,7 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
           }}
         >
           <Table.Column
-            dataIndex="name"
+            dataIndex="fileName"
             title="Name"
             defaultFilteredValue={getDefaultFilter("name", filters)}
             filterDropdown={(props) => (

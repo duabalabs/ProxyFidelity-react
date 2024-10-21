@@ -10,19 +10,24 @@ import {
   GetOneResponse,
   UpdateParams,
   UpdateResponse,
-} from '@refinedev/core';
+} from "@refinedev/core";
 
-import Parse from 'parse';
-
+import Parse from "parse";
 
 export const dataProvider: DataProvider = {
-  getList: async <TData>({ resource, pagination, filters, sort }: GetListParams): Promise<GetListResponse<TData>> => {
+  getList: async <TData>({
+    resource,
+    pagination,
+    filters,
+    sort,
+  }: GetListParams): Promise<GetListResponse<TData>> => {
     const { current = 1, pageSize = 10 } = pagination ?? {};
     const query = new Parse.Query(resource);
+
     // Apply filters if provided
     if (filters) {
       filters.forEach((filter) => {
-        if (filter.operator === 'eq') {
+        if (filter.operator === "eq") {
           query.equalTo(filter.field, filter.value);
         }
       });
@@ -31,7 +36,7 @@ export const dataProvider: DataProvider = {
     // Apply sorting if provided
     if (sort && sort.length > 0) {
       const { field, order } = sort[0];
-      if (order === 'asc') {
+      if (order === "asc") {
         query.ascending(field);
       } else {
         query.descending(field);
@@ -45,8 +50,12 @@ export const dataProvider: DataProvider = {
     try {
       const results = await query.find();
       const total = await query.count();
+
       return {
-        data: results as TData[],
+        data: results.map((item) => ({
+          id: item.id,
+          ...item.toJSON(),
+        })) as TData[],
         total,
       };
     } catch (error) {
@@ -54,19 +63,25 @@ export const dataProvider: DataProvider = {
     }
   },
 
-  getOne: async <TData>({ resource, id }: GetOneParams): Promise<GetOneResponse<TData>> => {
+  getOne: async <TData>({
+    resource,
+    id,
+  }: GetOneParams): Promise<GetOneResponse<TData>> => {
     const query = new Parse.Query(resource);
     try {
       const result = await query.get(`${id}`);
       return {
-        data: result as TData,
+        data: { id: result.id, ...result.toJSON() } as TData,
       };
     } catch (error) {
       return Promise.reject(error);
     }
   },
 
-  create: async <TData, TVariables>({ resource, variables }: CreateParams<TVariables>): Promise<CreateResponse<TData>> => {
+  create: async <TData, TVariables>({
+    resource,
+    variables,
+  }: CreateParams<TVariables>): Promise<CreateResponse<TData>> => {
     const ParseObject = Parse.Object.extend(resource);
     const parseInstance = new ParseObject();
 
@@ -77,14 +92,18 @@ export const dataProvider: DataProvider = {
     try {
       const result = await parseInstance.save();
       return {
-        data: result as TData,
+        data: { id: result.id, ...result.toJSON() } as TData,
       };
     } catch (error) {
       return Promise.reject(error);
     }
   },
 
-  update: async <TData, TVariables>({ resource, id, variables }: UpdateParams<TVariables>): Promise<UpdateResponse<TData>> => {
+  update: async <TData, TVariables>({
+    resource,
+    id,
+    variables,
+  }: UpdateParams<TVariables>): Promise<UpdateResponse<TData>> => {
     const query = new Parse.Query(resource);
     try {
       const parseInstance = await query.get(`${id}`);
@@ -95,14 +114,17 @@ export const dataProvider: DataProvider = {
 
       const result = await parseInstance.save();
       return {
-        data: result as TData,
+        data: { id: result.id, ...result.toJSON() } as TData,
       };
     } catch (error) {
       return Promise.reject(error);
     }
   },
 
-  deleteOne: async <TData, TVariables>({ resource, id }: DeleteOneParams<TVariables>): Promise<DeleteOneResponse<TData>> => {
+  deleteOne: async <TData, TVariables>({
+    resource,
+    id,
+  }: DeleteOneParams<TVariables>): Promise<DeleteOneResponse<TData>> => {
     const query = new Parse.Query(resource);
     try {
       const parseInstance = await query.get(`${id}`);
@@ -116,6 +138,6 @@ export const dataProvider: DataProvider = {
   // Other methods (getMany, updateMany, deleteMany, etc.) can be implemented similarly
 
   getApiUrl: (): string => {
-    return Parse.serverURL ?? '';
+    return Parse.serverURL ?? "";
   },
 };

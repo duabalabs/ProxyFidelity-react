@@ -39,7 +39,7 @@ export const uploadMultipartFile = async (
   currentFile: UploadDataProps, // Current file being uploaded
   setUploadProgress: (progress: number) => void, // Callback to set upload progress
   setUploadRate: (rate: number) => void // Callback to set upload rate
-) => {
+): Promise<ProjectFile> => {
   const {
     fileName,
     fileType,
@@ -49,6 +49,9 @@ export const uploadMultipartFile = async (
     chunkSize,
     totalParts,
     parts,
+    fileUrl,
+    cdnUrl,
+    fileHash,
   } = currentFile;
 
   const startTime = Date.now(); // Track time for upload rate calculation
@@ -98,12 +101,18 @@ export const uploadMultipartFile = async (
       parts: currentFile.parts,
     });
   }
-  await Parse.Cloud.run("completeMultipartUpload", {
+  const projectFile = (await Parse.Cloud.run("completeMultipartUpload", {
     fileName,
     uploadId,
     parts: currentFile.parts,
     projectId,
-  });
+    fileUrl,
+    cdnUrl,
+    fileType,
+    fileHash,
+  })) as ProjectFile;
+
+  return projectFile;
 };
 
 export const checkUnfinishedUploads = () => {
@@ -157,29 +166,6 @@ export const clearUnfinishedUploads = (fileName) => {
     (file) => file.fileName !== fileName
   );
   localStorage.setItem("unfinishedUploads", JSON.stringify(unfinishedUploads));
-};
-
-export const saveUploadedFileToParse = async (uploadData: UploadDataProps) => {
-  try {
-    const { fileName, fileType, fileUrl, cdnUrl, projectId } = uploadData;
-    const projectFile = new ProjectFile({
-      fileUrl,
-      cdnUrl,
-      fileName,
-      fileType,
-      project: {
-        __type: "Pointer",
-        className: "Project",
-        objectId: projectId,
-      },
-    } as any);
-
-    // Save the ProjectFile in Parse
-    await projectFile.save();
-  } catch (error) {
-    console.error("Error saving file to Parse:", error);
-    throw new Error("Failed to save file to Parse.");
-  }
 };
 
 const arrayBufferToBinaryString = (buffer: ArrayBuffer) => {

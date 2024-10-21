@@ -36,7 +36,13 @@ export const AppDataProvider = ({ children }) => {
 
   const updateActiveProject = async (project) => {
     setActiveProject(project);
-    user?.set("activeProject", project);
+    user?.set("activeProject", {
+      project: {
+        __type: "Pointer",
+        className: "Project",
+        objectId: project.id,
+      },
+    });
     await user.save();
   };
 

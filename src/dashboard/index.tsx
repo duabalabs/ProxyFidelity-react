@@ -57,9 +57,9 @@ const Dashboard: React.FC = () => {
       resources={resources}
       notificationProvider={useNotificationProvider}
       options={{
-        liveMode: "auto",
-        syncWithLocation: true,
-        warnWhenUnsavedChanges: true,
+        liveMode: "off",
+        syncWithLocation: false,
+        warnWhenUnsavedChanges: false,
       }}
     >
       <Routes>

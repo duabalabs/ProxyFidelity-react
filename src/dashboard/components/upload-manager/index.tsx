@@ -42,7 +42,6 @@ export const UploadManagerModal: React.FC<UploadManagerModalProps> = ({
     removeFile,
     setCurrentFile, // To handle file reselection
   } = useUpload();
-  console.log(uploadProgress, uploadRate);
 
   const { token } = theme.useToken();
 
@@ -89,38 +88,39 @@ export const UploadManagerModal: React.FC<UploadManagerModalProps> = ({
               marginBottom: "12px",
             }}
             actions={[
-              file.fileObject ? (
-                <Button
-                  danger
-                  type="text"
-                  icon={
-                    <CloseOutlined
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
-                    />
-                  }
-                  onClick={() => removeFile(file.fileName)}
-                  disabled={file === currentFile && isUploading}
-                />
-              ) : (
-                <Upload
-                  customRequest={handleFileSelect(file)}
-                  showUploadList={false}
-                >
-                  <Button
-                    icon={
-                      <UploadOutlined
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
-                    }
-                    type="primary"
-                    disabled={isUploading}
-                  >
-                    Reselect File
-                  </Button>
-                </Upload>
-              ),
+              <Button
+                danger
+                type="text"
+                icon={
+                  <CloseOutlined
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                  />
+                }
+                onClick={() => removeFile(file.fileName)}
+                disabled={file === currentFile && isUploading}
+              />,
+              ...(!file.fileObject
+                ? [
+                    <Upload
+                      customRequest={handleFileSelect(file)}
+                      showUploadList={false}
+                    >
+                      <Button
+                        icon={
+                          <UploadOutlined
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
+                          />
+                        }
+                        type="primary"
+                        disabled={isUploading}
+                      >
+                        Reselect File
+                      </Button>
+                    </Upload>,
+                  ]
+                : []),
             ]}
           >
             <Row style={{ width: "100%" }} align="middle">

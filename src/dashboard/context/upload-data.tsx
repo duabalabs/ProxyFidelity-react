@@ -6,12 +6,13 @@ import React, {
   useState,
 } from "react";
 
+import { useDataProvider, useInvalidate } from "@refinedev/core";
+
 import {
   checkUnfinishedUploads,
   clearUnfinishedUploads,
   initiateMultipartUpload,
   saveUnfinishedUpload,
-  saveUploadedFileToParse, // The function to get the uploadId and URLs
   UploadDataProps,
   uploadMultipartFile,
 } from "@/dashboard/routes/files/helper";
@@ -35,7 +36,7 @@ const UploadContext = createContext<UploadDataType>(null);
 export const useUpload = () => useContext(UploadContext);
 
 export const UploadProvider = ({ children }) => {
-  const [fileQueue, setFileQueue] = useState([]);
+  const [fileQueue, setFileQueue] = useState<UploadDataProps[]>([]);
   const [currentFile, setCurrentFile] = useState<UploadDataProps>();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -44,31 +45,28 @@ export const UploadProvider = ({ children }) => {
   const [isUploadManagerVisible, setUploadManagerVisible] = useState(false);
   const openUploadManager = () => setUploadManagerVisible(true);
   const closeUploadManager = () => setUploadManagerVisible(false);
+  const invalidate = useInvalidate();
 
-  // Load unfinished uploads from localStorage on initial load
   useEffect(() => {
     const unfinishedUploads = checkUnfinishedUploads();
     if (unfinishedUploads.length > 0) {
-      const fileData = unfinishedUploads[0]; // Only the currently uploading file matters
-      setFileQueue([fileData]); // Ensure this file is in the queue
+      const fileData = unfinishedUploads[0];
+      setFileQueue([fileData]);
     }
   }, []);
 
   const startUpload = useCallback(async () => {
-    console.log("start upload", fileQueue, isUploading);
-    if (fileQueue.length === 0 || isUploading) return;
+    if (fileQueue.length === 0 || isUploading || !fileQueue[0].fileObject)
+      return;
     let uploadData = fileQueue[0];
-    console.log("how many ");
     if (!uploadData) return;
 
     const { uploadId } = uploadData;
 
     setIsUploading(true);
     if (!uploadId) {
-      // Initiate multipart upload for the first time and get all necessary data
       const { uploadId, fileUrl, cdnUrl, chunkSize, totalParts, fileHash } =
-        {} as any;
-      // await initiateMultipartUpload(uploadData);
+        await initiateMultipartUpload(uploadData);
 
       uploadData = {
         ...uploadData,
@@ -84,10 +82,9 @@ export const UploadProvider = ({ children }) => {
           file.fileName === uploadData.fileName ? uploadData : file
         )
       );
-      // Update the current file with the new data
+
       setCurrentFile(uploadData);
 
-      // Save updated data to localStorage
       saveUnfinishedUpload({
         ...uploadData,
         uploadId,
@@ -99,65 +96,25 @@ export const UploadProvider = ({ children }) => {
       });
     }
 
+    setFileQueue((prev) =>
+      prev.filter((file) => file.fileName !== uploadData.fileName)
+    );
+    clearUnfinishedUploads(uploadData.fileName);
     try {
-      // await uploadMultipartFile(
-      //   uploadData,
-      //   (progress) => updateFileProgress(progress),
-      //   (rate) => setUploadRate(rate)
-      // );
-
-      const interval = setInterval(() => {
-        setUploadProgress((prevProgress) => {
-          const newProgress = prevProgress + 10; // Increase progress by 5%
-          updateFileProgress(newProgress);
-
-          if (newProgress >= 100) {
-            clearInterval(interval);
-            setFileQueue((prev) =>
-              prev.filter((file) => file.fileName !== uploadData.fileName)
-            ); // Remove completed file from queue
-            clearUnfinishedUploads(uploadData.fileName); // Clear from local storage
-
-            // Save to Parse or any other action you need once upload is done
-            // saveUploadedFileToParse(uploadData);
-
-            setIsUploading(false);
-            return 0;
-          }
-
-          return newProgress;
+      const projectFile = await uploadMultipartFile(
+        uploadData,
+        (progress) => updateFileProgress(progress),
+        (rate) => setUploadRate(rate)
+      );
+      if (projectFile) {
+        invalidate({
+          resource: "ProjectFile",
+          invalidates: ["list"],
         });
+      }
 
-        setUploadRate(Math.random() * 100); // Arbitrary rate value for testing
-      }, 1000);
-
-      // Timeout after 3 minutes
-      // const timeout = setTimeout(() => {
-      //   clearInterval(interval);
-      //   setFileQueue((prev) =>
-      //     prev.filter((file) => file.fileName !== uploadData.fileName)
-      //   ); // Remove completed file from queue
-      //   clearUnfinishedUploads(uploadData.fileName); // Clear from local storage
-
-      //   // Save to Parse or any other action you need once upload is done
-      //   // saveUploadedFileToParse(uploadData);
-
-      //   setIsUploading(false);
-      // }, 20000);
-
-      // return () => clearTimeout(timeout);
-
-      // setFileQueue((prev) =>
-      //   prev.filter((file) => file.fileName !== uploadData.fileName)
-      // ); // Remove completed file from queue
-      // clearUnfinishedUploads(uploadData.fileName); // Clear from local storage
-
-      // // // Save to Parse or any other action you need once upload is done
-      // // saveUploadedFileToParse(uploadData);
-
-      // setIsUploading(false);
-    } catch (error) {
       setIsUploading(false);
+    } catch (error) {
       console.error("Error during upload:", error);
     }
   }, [fileQueue, isUploading, setUploadProgress, setUploadRate]);
@@ -172,15 +129,15 @@ export const UploadProvider = ({ children }) => {
       fileType: file.type,
       fileObject: file,
       projectId,
-      uploadId: null, // This will be generated when upload starts
+      uploadId: null,
       fileUrl: null,
       cdnUrl: null,
-      partNumber: 1, // Start at part 1
+      partNumber: 1,
       uploadProgress: 0,
       uploadRate: 0,
-      parts: [], // This will hold part details for resumable upload
-      totalParts: null, // Calculated later
-      chunkSize: null, // Set when the upload starts
+      parts: [],
+      totalParts: null,
+      chunkSize: null,
     }));
 
     setFileQueue((prev) => [...prev, ...newFiles]);
@@ -189,11 +146,11 @@ export const UploadProvider = ({ children }) => {
 
   const removeFile = (fileName) => {
     if (fileName === currentFile?.fileName) {
-      setIsUploading(false); // Stop current upload
-      setCurrentFile(null); // Clear the current file
+      setIsUploading(false);
+      setCurrentFile(null);
     }
     setFileQueue((prev) => prev.filter((file) => file.fileName !== fileName));
-    clearUnfinishedUploads(fileName); // Clear from local storage
+    clearUnfinishedUploads(fileName);
   };
 
   useEffect(() => {
