@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
-import { useForm } from "@refinedev/antd";
+import { useForm, useModalForm } from "@refinedev/antd";
 import { type HttpError, useNavigation } from "@refinedev/core";
 
 import { Modal } from "antd";
 import dayjs from "dayjs";
 
-import type { Event, EventCreateInput } from "@/dashboard/graphql/schema.types";
+import { useAppData } from "@/dashboard/context";
+import type { EventCreateInput } from "@/dashboard/graphql/schema.types";
+import { CalendarEvent, CALENDAREVENT_CLASSNAME } from "@/dashboard/lib";
 
 import { CalendarForm } from "./components";
 
@@ -20,13 +22,17 @@ type FormValues = EventCreateInput & {
 export const CalendarCreatePage: React.FC = () => {
   const [isAllDayEvent, setIsAllDayEvent] = useState(false);
   const { list } = useNavigation();
+  const { activeProject } = useAppData();
 
-  const { formProps, saveButtonProps, form, onFinish } = useForm<
-    Event,
-    HttpError,
-    EventCreateInput
-  >();
+  const { formProps, modalProps, close, onFinish } = useModalForm<
+    CalendarEvent,
+    HttpError
+  >({
+    resource: CALENDAREVENT_CLASSNAME,
+    action: "create",
+  });
 
+  const form = formProps.form;
   const handleOnFinish = async (values: FormValues) => {
     const { rangeDate, date, time, color, ...otherValues } = values;
 
@@ -50,23 +56,25 @@ export const CalendarCreatePage: React.FC = () => {
 
     await onFinish({
       ...otherValues,
+      project: activeProject,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
       color: typeof color === "object" ? `#${color.toHex()}` : color,
-    });
+    } as any);
+
+    form.resetFields();
+    close();
+    list(CALENDAREVENT_CLASSNAME, "replace");
   };
 
   return (
     <Modal
       title="Create Event"
+      {...modalProps}
       open
       onCancel={() => {
         list("events");
       }}
-      okButtonProps={{
-        ...saveButtonProps,
-      }}
-      okText="Save"
       width={560}
     >
       <CalendarForm

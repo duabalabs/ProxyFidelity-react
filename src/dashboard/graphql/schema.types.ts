@@ -11,7 +11,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 };
 export type MakeEmpty<
   T extends { [key: string]: unknown },
-  K extends keyof T,
+  K extends keyof T
 > = { [_ in K]?: never };
 export type Incremental<T> =
   | T
@@ -2342,11 +2342,9 @@ export type EventConnection = {
 };
 
 export type EventCreateInput = {
-  categoryId: Scalars["ID"]["input"];
   color: Scalars["String"]["input"];
   description: Scalars["String"]["input"];
   endDate: Scalars["DateTime"]["input"];
-  participantIds: Array<Scalars["ID"]["input"]>;
   startDate: Scalars["DateTime"]["input"];
   title: Scalars["String"]["input"];
 };

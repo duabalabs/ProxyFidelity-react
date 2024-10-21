@@ -1,15 +1,13 @@
 import type { FC } from "react";
 
-import type { GetFieldsFromList } from "@refinedev/nestjs-query";
-
 import { Space, Tag } from "antd";
 
-import type { UsersSelectQuery } from "@/dashboard/graphql/types";
+import { User } from "@/dashboard/lib";
 
 import { CustomAvatar } from "../custom-avatar";
 
 type Props = {
-  user: GetFieldsFromList<UsersSelectQuery>;
+  user: User;
 };
 
 export const UserTag: FC<Props> = ({ user }) => {
@@ -27,10 +25,10 @@ export const UserTag: FC<Props> = ({ user }) => {
       <Space size={4}>
         <CustomAvatar
           src={user.avatarUrl}
-          name={user.name}
+          name={user.username}
           style={{ display: "inline-flex" }}
         />
-        {user.name}
+        {user.username}
       </Space>
     </Tag>
   );

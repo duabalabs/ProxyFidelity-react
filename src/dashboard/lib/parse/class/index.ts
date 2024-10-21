@@ -1,9 +1,9 @@
-import { SubClass } from '../initialize';
-import { Address, ADDRESS_CLASSNAME } from './address';
-import { Project, PROJECT_CLASSNAME } from './project';
-import { ProjectFile, PROJECTFILE_CLASSNAME } from './projectFile';
-import { User, USER_CLASSNAME } from './user';
-
+import { SubClass } from "../initialize";
+import { Address, ADDRESS_CLASSNAME } from "./address";
+import { CalendarEvent, CALENDAREVENT_CLASSNAME } from "./calendarEvent";
+import { Project, PROJECT_CLASSNAME } from "./project";
+import { ProjectFile, PROJECTFILE_CLASSNAME } from "./projectFile";
+import { User, USER_CLASSNAME } from "./user";
 
 const CustomSubClasses: SubClass[] = [
   {
@@ -22,14 +22,16 @@ const CustomSubClasses: SubClass[] = [
     className: USER_CLASSNAME,
     class: User as any,
   },
+  {
+    className: CALENDAREVENT_CLASSNAME,
+    class: CalendarEvent as any,
+  },
 ];
-export const SubClasses: SubClass[] = [
-  ...CustomSubClasses
-];
+export const SubClasses: SubClass[] = [...CustomSubClasses];
 
-
-export * from './address'
-export * from './chat'
-export * from './project'
-export * from './projectFile'
-export * from './user'
+export * from "./address";
+export * from "./calendarEvent";
+export * from "./chat";
+export * from "./project";
+export * from "./projectFile";
+export * from "./user";

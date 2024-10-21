@@ -1,8 +1,5 @@
 import React from "react";
 
-import { useSelect } from "@refinedev/antd";
-import type { GetFieldsFromList } from "@refinedev/nestjs-query";
-
 import {
   Checkbox,
   Col,
@@ -13,14 +10,9 @@ import {
   type FormProps,
   Input,
   Row,
-  Select,
   TimePicker,
 } from "antd";
 import dayjs from "dayjs";
-
-import { EVENT_CATEGORIES_QUERY } from "@/dashboard/graphql/queries";
-import type { EventCategoriesQuery } from "@/dashboard/graphql/types";
-import { useUsersSelect } from "@/dashboard/hooks/useUsersSelect";
 
 type CalendarFormProps = {
   isAllDayEvent: boolean;
@@ -37,17 +29,6 @@ export const CalendarForm: React.FC<CalendarFormProps> = ({
   isAllDayEvent = false,
   setIsAllDayEvent,
 }) => {
-  const { selectProps: categorySelectProps } = useSelect<
-    GetFieldsFromList<EventCategoriesQuery>
-  >({
-    resource: "eventCategories",
-    meta: {
-      gqlQuery: EVENT_CATEGORIES_QUERY,
-    },
-  });
-
-  const { selectProps: userSelectProps } = useUsersSelect();
-
   const rangeDate = form.getFieldsValue().rangeDate;
   const date = form.getFieldsValue().date;
 
@@ -167,19 +148,6 @@ export const CalendarForm: React.FC<CalendarFormProps> = ({
       <Row gutter={[32, 32]}>
         <Col span={12}>
           <Form.Item
-            label="Category"
-            name="categoryId"
-            rules={[
-              {
-                // required: true,
-              },
-            ]}
-          >
-            <Select {...categorySelectProps} />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
             label="Color"
             name="color"
             rules={[
@@ -212,18 +180,6 @@ export const CalendarForm: React.FC<CalendarFormProps> = ({
           </Form.Item>
         </Col>
       </Row>
-
-      <Form.Item
-        label="Invite participants"
-        name="participantIds"
-        rules={[
-          {
-            // required: true,
-          },
-        ]}
-      >
-        <Select mode="multiple" allowClear {...userSelectProps} />
-      </Form.Item>
     </Form>
   );
 };

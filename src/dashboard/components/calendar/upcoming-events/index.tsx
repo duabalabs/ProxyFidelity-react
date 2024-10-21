@@ -1,14 +1,14 @@
 import React from "react";
 
 import { useList, useNavigation } from "@refinedev/core";
-import type { GetFieldsFromList } from "@refinedev/nestjs-query";
 
 import { CalendarOutlined, RightCircleOutlined } from "@ant-design/icons";
 import type { CardProps } from "antd";
 import { Button, Card, Skeleton as AntdSkeleton } from "antd";
 import dayjs from "dayjs";
 
-import type { UpcomingEventsQuery } from "@/dashboard/graphql/types";
+import { useAppData } from "@/dashboard/context";
+import { CalendarEvent, CALENDAREVENT_CLASSNAME } from "@/dashboard/lib";
 
 import { Text } from "../../text";
 import { CalendarUpcomingEvent } from "./event";
@@ -71,9 +71,9 @@ export const CalendarUpcomingEvents: React.FC<CalendarUpcomingEventsProps> = ({
   showGoToListButton,
 }) => {
   const { list } = useNavigation();
-
-  const { data, isLoading } = useList<GetFieldsFromList<UpcomingEventsQuery>>({
-    resource: "events",
+  const { activeProject } = useAppData();
+  const { data, isLoading } = useList<CalendarEvent>({
+    resource: CALENDAREVENT_CLASSNAME,
     pagination: {
       pageSize: limit,
     },
@@ -88,6 +88,11 @@ export const CalendarUpcomingEvents: React.FC<CalendarUpcomingEventsProps> = ({
         field: "startDate",
         operator: "gte",
         value: dayjs().format("YYYY-MM-DD"),
+      },
+      {
+        field: "project",
+        value: activeProject,
+        operator: "eq",
       },
     ],
     meta: {

@@ -66,6 +66,7 @@ export const FilesFormModal = ({
   return (
     <Modal
       {...modalProps}
+      okText="Upload"
       confirmLoading={loading}
       width={560}
       onCancel={() => {

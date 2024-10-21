@@ -7,15 +7,12 @@ import { Col, Row } from "antd";
 
 import { CalendarUpcomingEvents } from "@/dashboard/components";
 
-import { Calendar, CalendarCategories } from "./components";
+import { Calendar } from "./components";
 
 export const CalendarPageWrapper: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const { show } = useNavigation();
-  const [selectedEventCategory, setSelectedEventCategory] = useState<string[]>(
-    [],
-  );
 
   return (
     <div className="page-container">
@@ -29,25 +26,12 @@ export const CalendarPageWrapper: React.FC<React.PropsWithChildren> = ({
             limit={3}
             cardProps={{ style: { marginBottom: "1rem" } }}
           />
-
-          <CalendarCategories
-            onChange={(event) => {
-              setSelectedEventCategory((prev) => {
-                if (prev.includes(event.target.value)) {
-                  return prev.filter((item) => item !== event.target.value);
-                }
-
-                return [...prev, event.target.value];
-              });
-            }}
-          />
         </Col>
         <Col xs={24} xl={18}>
           <Calendar
             onClickEvent={({ id }) => {
               show("events", id);
             }}
-            categoryId={selectedEventCategory}
           />
         </Col>
       </Row>

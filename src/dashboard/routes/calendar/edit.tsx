@@ -6,12 +6,9 @@ import { useNavigation, useResource } from "@refinedev/core";
 import { Modal } from "antd";
 import dayjs from "dayjs";
 
-import { CalendarForm } from "./components";
-import { CALENDAR_UPDATE_EVENT_MUTATION } from "./queries";
-import type { GetFields } from "@refinedev/nestjs-query";
-import type { UpdateEventMutation } from "../../graphql/types";
+import { CalendarEvent, CALENDAREVENT_CLASSNAME } from "@/dashboard/lib";
 
-type Event = GetFields<UpdateEventMutation>;
+import { CalendarForm } from "./components";
 
 export const CalendarEditPage: React.FC = () => {
   const [isAllDayEvent, setIsAllDayEvent] = useState(false);
@@ -24,14 +21,12 @@ export const CalendarEditPage: React.FC = () => {
     form,
     onFinish,
     query: queryResult,
-  } = useForm<Event>({
+  } = useForm<CalendarEvent>({
+    resource: CALENDAREVENT_CLASSNAME,
     action: "edit",
     id,
     queryOptions: {
       enabled: true,
-    },
-    meta: {
-      gqlMutation: CALENDAR_UPDATE_EVENT_MUTATION,
     },
   });
 
@@ -40,13 +35,6 @@ export const CalendarEditPage: React.FC = () => {
     const endDate = queryResult?.data?.data.endDate;
     const utcStartDate = dayjs(startDate).utc();
     const utcEndDate = dayjs(endDate).utc();
-
-    form.setFieldsValue({
-      categoryId: queryResult?.data?.data.category.id,
-      participantIds: queryResult?.data?.data.participants.map(
-        (participant) => participant.id,
-      ),
-    });
 
     // if more than 24 hours, set as all day event
     if (utcEndDate.diff(utcStartDate, "hours") >= 23) {

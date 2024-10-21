@@ -1,7 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import { useList } from "@refinedev/core";
-import type { GetFieldsFromList } from "@refinedev/nestjs-query";
 
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import type FullCalendar from "@fullcalendar/react";
@@ -9,14 +8,12 @@ import { Button, Card, Grid, Radio } from "antd";
 import dayjs from "dayjs";
 
 import { Text } from "@/dashboard/components";
-import type { CalendarEventsQuery } from "@/dashboard/graphql/types";
+import { useAppData } from "@/dashboard/context";
+import { CalendarEvent, CALENDAREVENT_CLASSNAME } from "@/dashboard/lib";
 
 import styles from "./index.module.css";
-import { CALENDAR_EVENTS_QUERY } from "./queries";
 
 const FullCalendarWrapper = lazy(() => import("./full-calendar"));
-
-type Event = GetFieldsFromList<CalendarEventsQuery>;
 
 type View =
   | "dayGridMonth"
@@ -28,7 +25,7 @@ type View =
 
 type CalendarProps = {
   categoryId?: string[];
-  onClickEvent?: (event: Event) => void;
+  onClickEvent?: (event: CalendarEvent) => void;
 };
 
 export const Calendar: React.FC<CalendarProps> = ({
@@ -40,6 +37,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   const [title, setTitle] = useState(calendarRef.current?.getApi().view.title);
   const { md } = Grid.useBreakpoint();
 
+  const { activeProject } = useAppData();
   useEffect(() => {
     calendarRef.current?.getApi().changeView(calendarView);
   }, [calendarView]);
@@ -52,8 +50,8 @@ export const Calendar: React.FC<CalendarProps> = ({
     }
   }, [md]);
 
-  const { data } = useList<Event>({
-    resource: "events",
+  const { data } = useList<CalendarEvent>({
+    resource: CALENDAREVENT_CLASSNAME,
     pagination: {
       mode: "off",
     },
@@ -63,10 +61,12 @@ export const Calendar: React.FC<CalendarProps> = ({
         operator: "in",
         value: categoryId?.length ? categoryId : undefined,
       },
+      {
+        field: "project",
+        value: activeProject,
+        operator: "eq",
+      },
     ],
-    meta: {
-      gqlQuery: CALENDAR_EVENTS_QUERY,
-    },
   });
 
   const events = (data?.data ?? []).map(
@@ -77,7 +77,7 @@ export const Calendar: React.FC<CalendarProps> = ({
       end: endDate,
       color: color,
       allDay: dayjs(endDate).utc().diff(dayjs(startDate).utc(), "hours") >= 23,
-    }),
+    })
   );
 
   return (

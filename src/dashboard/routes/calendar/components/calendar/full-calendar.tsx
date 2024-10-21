@@ -5,12 +5,12 @@ import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import type { Event } from "@/dashboard/graphql/schema.types";
+import { CalendarEvent } from "@/dashboard/lib";
 
 type FullCalendarWrapperProps = {
   calendarRef: RefObject<FullCalendar>;
-  events: (Partial<Event> & { allDay: boolean })[];
-  onClickEvent?: (event: Event) => void;
+  events: (Partial<CalendarEvent> & { allDay: boolean })[];
+  onClickEvent?: (event: CalendarEvent) => void;
   setTitle: Dispatch<SetStateAction<string | undefined>>;
 };
 
@@ -32,7 +32,9 @@ const FullCalendarWrapper: FC<FullCalendarWrapperProps> = ({
         meridiem: false,
       }}
       eventClick={({ event }) => {
-        onClickEvent?.(events.find(({ id }) => id === event.id) as Event);
+        onClickEvent?.(
+          events.find(({ id }) => id === event.id) as CalendarEvent
+        );
       }}
       datesSet={({ view }) => {
         setTitle(view.title);

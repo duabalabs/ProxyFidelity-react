@@ -7,25 +7,21 @@ import {
   ClockCircleOutlined,
   CloseOutlined,
   EditOutlined,
-  FlagOutlined,
   InfoCircleOutlined,
-  TeamOutlined,
 } from "@ant-design/icons";
-import { Button, Drawer, Skeleton, Space, Tag } from "antd";
+import { Button, Drawer, Skeleton, Tag } from "antd";
 import dayjs from "dayjs";
 
-import { Text, UserTag } from "@/dashboard/components";
-
-import type { GetEventQuery } from "../../graphql/types";
-
-type Event = GetFields<GetEventQuery>;
+import { Text } from "@/dashboard/components";
+import { CalendarEvent, CALENDAREVENT_CLASSNAME } from "@/dashboard/lib";
 
 export const CalendarShowPage: React.FC = () => {
   const { id } = useResource();
   const { list } = useNavigation();
 
-  const { query: queryResult } = useShow<Event>({
-    id
+  const { query: queryResult } = useShow<CalendarEvent>({
+    resource: CALENDAREVENT_CLASSNAME,
+    id,
   });
 
   const { data, isLoading, isError, error } = queryResult;
@@ -35,8 +31,7 @@ export const CalendarShowPage: React.FC = () => {
     return null;
   }
 
-  const { description, startDate, endDate, category, participants } =
-    data?.data ?? {};
+  const { description, startDate, endDate } = data?.data ?? {};
 
   const utcStartDate = dayjs(startDate).utc();
   const utcEndDate = dayjs(endDate).utc();
@@ -65,7 +60,7 @@ export const CalendarShowPage: React.FC = () => {
           <div style={{ display: "flex", gap: "8px" }}>
             <div
               style={{
-                backgroundColor: data?.data.color,
+                backgroundColor: data?.data?.color ?? "blue",
                 flexShrink: 0,
                 borderRadius: "50%",
                 width: "10px",
@@ -119,7 +114,7 @@ export const CalendarShowPage: React.FC = () => {
               {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
               <CalendarOutlined style={{ marginRight: ".5rem" }} />
               <Text>{`${dayjs(utcStartDate).format("MMMM D")} - ${dayjs(
-                utcEndDate,
+                utcEndDate
               ).format("MMMM D")}`}</Text>
               <Tag style={{ marginLeft: ".5rem" }} color="blue">
                 All Day
@@ -136,26 +131,12 @@ export const CalendarShowPage: React.FC = () => {
                 {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
                 <ClockCircleOutlined style={{ marginRight: ".5rem" }} />
                 <Text>{`${dayjs(utcStartDate).format("h:mma")} - ${dayjs(
-                  utcEndDate,
+                  utcEndDate
                 ).format("h:mma")}`}</Text>
               </div>
             </>
           )}
 
-          <div>
-            {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
-            <FlagOutlined style={{ marginRight: ".5rem" }} />
-            <Text>{category?.title}</Text>
-          </div>
-          <div style={{ display: "flex", alignItems: "start" }}>
-            {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
-            <TeamOutlined style={{ marginRight: ".5rem" }} />
-            <Space size={4} wrap style={{ marginTop: "-8px" }}>
-              {participants?.map((participant) => (
-                <UserTag key={participant.id} user={participant} />
-              ))}
-            </Space>
-          </div>
           <div style={{ display: "flex", alignItems: "start" }}>
             {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
             <InfoCircleOutlined

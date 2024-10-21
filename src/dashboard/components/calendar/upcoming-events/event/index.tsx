@@ -7,12 +7,13 @@ import { Badge } from "antd";
 import dayjs from "dayjs";
 
 import type { UpcomingEventsQuery } from "@/dashboard/graphql/types";
+import { CalendarEvent } from "@/dashboard/lib";
 
 import { Text } from "../../../text";
 import styles from "../index.module.css";
 
 type CalendarUpcomingEventProps = {
-  item: GetFieldsFromList<UpcomingEventsQuery>;
+  item: CalendarEvent;
 };
 
 export const CalendarUpcomingEvent: React.FC<CalendarUpcomingEventProps> = ({
@@ -46,7 +47,7 @@ export const CalendarUpcomingEvent: React.FC<CalendarUpcomingEventProps> = ({
     }
 
     return `${dayjs(startDate).format("HH:mm")} - ${dayjs(endDate).format(
-      "HH:mm",
+      "HH:mm"
     )}`;
   };
 
