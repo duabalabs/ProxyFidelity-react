@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { message, Modal, Spin } from "antd";
 import Parse from "parse";
 
-import { ProjectFile } from "../lib";
+import { ProjectFile } from "../../../lib";
 
 type FilePreviewModalProps = {
   isVisible: boolean;

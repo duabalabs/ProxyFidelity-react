@@ -6,6 +6,7 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
 import { CalendarEvent } from "@/dashboard/lib";
+import { theme } from "antd";
 
 type FullCalendarWrapperProps = {
   calendarRef: RefObject<FullCalendar>;
@@ -20,9 +21,12 @@ const FullCalendarWrapper: FC<FullCalendarWrapperProps> = ({
   onClickEvent,
   setTitle,
 }) => {
+  const { token } = theme.useToken();
   return (
     <FullCalendar
+      eventColor=""
       ref={calendarRef}
+      eventTextColor={token.colorText}
       plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
       initialView={"dayGridMonth"}
       events={events}

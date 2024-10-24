@@ -1,5 +1,5 @@
-import { IMessage } from "./types"
-import { ParseBaseClass } from "../../baseClasses";
+import { ParseBaseClass } from "../baseClasses";
+import { IMessage } from "./types";
 
 export const MESSAGE_CLASSNAME = "Message";
 

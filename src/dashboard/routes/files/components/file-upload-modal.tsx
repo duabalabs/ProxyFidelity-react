@@ -9,6 +9,7 @@ import { Button, Form, message, Modal, Upload } from "antd";
 
 import { useAppData } from "@/dashboard/context/app-data";
 import { useUpload } from "@/dashboard/context/upload-data"; // Import the upload context
+import { PROJECTFILE_CLASSNAME } from "@/dashboard/lib";
 
 export const FilesFormModal = ({
   action,
@@ -23,7 +24,7 @@ export const FilesFormModal = ({
   const { addFiles } = useUpload();
 
   const { formProps, modalProps, close, onFinish } = useModalForm({
-    resource: "ProjectFile",
+    resource: PROJECTFILE_CLASSNAME,
     action,
     id: params.id,
     defaultVisible: true,

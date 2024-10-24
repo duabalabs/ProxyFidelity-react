@@ -15,9 +15,9 @@ import dayjs from "dayjs";
 import debounce from "lodash/debounce";
 
 import { ListTitleButton, PaginationTotal, Text } from "@/dashboard/components";
-import { FilePreviewModal } from "@/dashboard/components/file-preview";
 import { useAppData } from "@/dashboard/context/app-data";
-import { ProjectFile } from "@/dashboard/lib/parse";
+import { ProjectFile, PROJECTFILE_CLASSNAME } from "@/dashboard/lib/parse";
+import { FilePreviewModal } from "@/dashboard/routes/files/components/file-preview-modal";
 
 export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
   const screens = Grid.useBreakpoint();
@@ -132,7 +132,10 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
           pagination={{
             ...tableProps.pagination,
             showTotal: (total) => (
-              <PaginationTotal total={total} entityName="files" />
+              <PaginationTotal
+                total={total}
+                entityName={PROJECTFILE_CLASSNAME}
+              />
             ),
           }}
           rowKey="id"

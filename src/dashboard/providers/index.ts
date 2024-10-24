@@ -1,3 +1,3 @@
-export * from "./auth";
-export * from "./data";
+export * from "./authProvider";
+export * from "./dataProvider";
 export * from "./search-client";

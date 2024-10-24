@@ -1,5 +1,5 @@
 export * from ".";
-export * from "./form-modal";
+export * from "./file-upload-modal";
 export * from "./products-services";
 export * from "./show-description";
 export * from "./status-indicator";

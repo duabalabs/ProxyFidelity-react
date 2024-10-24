@@ -12,7 +12,7 @@ import routerProvider, {
 import { FullScreenLoading, Layout } from "./components";
 import { useAutoLoginForDemo, useParseConnect } from "./hooks";
 import { IParseServerAPICred } from "./lib/parse";
-import { authProvider, dataProvider } from "./providers/parse";
+import { authProvider, dataProvider } from "./providers";
 import { resources } from "./resources";
 import { SettingsPage } from "./routes/administration";
 import {
@@ -26,6 +26,11 @@ import { FilesCreatePage, FilesEditPage, FilesListPage } from "./routes/files";
 import { ForgotPasswordPage } from "./routes/forgot-password";
 import { LoginPage } from "./routes/login";
 import { RegisterPage } from "./routes/register";
+import {
+  TransactionCreatePage,
+  TransactionEditPage,
+  TransactionListPage,
+} from "./routes/transaction";
 import { UpdatePasswordPage } from "./routes/update-password";
 
 const Dashboard: React.FC = () => {
@@ -110,6 +115,33 @@ const Dashboard: React.FC = () => {
               }
             ></Route>
           </Route>
+
+          <Route
+            path="/transaction"
+            element={
+              <TransactionListPage>
+                <Outlet />
+              </TransactionListPage>
+            }
+          >
+            <Route
+              path="create"
+              element={
+                <TransactionCreatePage>
+                  <Outlet />
+                </TransactionCreatePage>
+              }
+            ></Route>
+            <Route
+              path="edit/:id"
+              element={
+                <TransactionEditPage>
+                  <Outlet />
+                </TransactionEditPage>
+              }
+            ></Route>
+          </Route>
+
           <Route path="/administration" element={<Outlet />}>
             <Route path="settings" element={<SettingsPage />} />
           </Route>

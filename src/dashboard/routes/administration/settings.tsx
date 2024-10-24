@@ -139,7 +139,7 @@ const UsersTable = () => {
       }
       extra={
         <>
-          <Text className="tertiary">Total users: </Text>
+          <Text>Total users: </Text>
           <Text strong>
             {tableProps?.pagination !== false && tableProps.pagination?.total}
           </Text>
@@ -217,25 +217,25 @@ const companyInfo = [
     label: "Address",
     value: "2158 Mount Tabor, Westbury, New York, USA 11590",
     // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
-    icon: <EnvironmentOutlined className="tertiary" />,
+    icon: <EnvironmentOutlined />,
   },
   {
     label: "Phone",
     value: "+123 456 789 01 23",
     // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
-    icon: <PhoneOutlined className="tertiary" />,
+    icon: <PhoneOutlined />,
   },
   {
     label: "Email",
     value: "info@globexcorp.com",
     // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
-    icon: <MailOutlined className="tertiary" />,
+    icon: <MailOutlined />,
   },
   {
     label: "Website",
     value: "https://globexcorp.com",
     // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
-    icon: <GlobalOutlined className="tertiary" />,
+    icon: <GlobalOutlined />,
   },
 ];
 
@@ -264,12 +264,8 @@ export const CompanyInfo = () => {
             <div key={item.label} className={styles.listItem}>
               <div>{item.icon}</div>
               <div className={styles.listItemContent}>
-                <Text size="xs" className="tertiary">
-                  {item.label}
-                </Text>
-                <Text className={cn(styles.listItemContent, "primary")}>
-                  {item.value}
-                </Text>
+                <Text size="xs">{item.label}</Text>
+                <Text className={cn(styles.listItemContent)}>{item.value}</Text>
               </div>
             </div>
           );

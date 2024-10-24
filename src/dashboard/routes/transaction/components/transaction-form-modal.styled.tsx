@@ -2,41 +2,42 @@ import { createStyles } from "antd-style";
 
 export const useStyles = createStyles(({ token, isDarkMode }) => {
   return {
-    serviceTableWrapper: {
+    transactionTableWrapper: {
       overflow: "auto",
     },
-    serviceTableContainer: {
-      minWidth: "960px",
+    transactionTableContainer: {
       borderRadius: "8px",
       border: `1px solid ${token.colorBorder}`,
     },
-    serviceHeader: {
+    transactionHeader: {
       background: isDarkMode ? "#1F1F1F" : "#FAFAFA",
       borderRadius: "8px 8px 0 0",
     },
-    serviceHeaderDivider: {
+    transactionHeaderDivider: {
       height: "24px",
       marginTop: "auto",
       marginBottom: "auto",
       marginInline: "0",
     },
-    serviceHeaderColumn: {
+    transactionHeaderColumn: {
       fontWeight: 600,
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       padding: "12px 16px",
     },
-    serviceRowColumn: {
+    transactionRowColumn: {
       display: "flex",
       alignItems: "center",
       padding: "12px 16px",
     },
-    addNewServiceItemButton: {
+    addNewTransactionItemButton: {
       color: token.colorPrimary,
     },
     labelTotal: {
       color: token.colorTextSecondary,
+      width: "100%",
+      display: "flex",
     },
   };
 });

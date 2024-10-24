@@ -96,16 +96,16 @@ export const UploadProvider = ({ children }) => {
       });
     }
 
-    setFileQueue((prev) =>
-      prev.filter((file) => file.fileName !== uploadData.fileName)
-    );
-    clearUnfinishedUploads(uploadData.fileName);
     try {
       const projectFile = await uploadMultipartFile(
         uploadData,
         (progress) => updateFileProgress(progress),
         (rate) => setUploadRate(rate)
       );
+      setFileQueue((prev) =>
+        prev.filter((file) => file.fileName !== uploadData.fileName)
+      );
+      clearUnfinishedUploads(uploadData.fileName);
       if (projectFile) {
         invalidate({
           resource: "ProjectFile",

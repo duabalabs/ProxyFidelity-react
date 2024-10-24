@@ -1,6 +1,6 @@
-import { IChat } from "./types"
 import { ParseBaseClass } from "../baseClasses";
-import { Message } from "./message";
+import { Message } from "../message";
+import { IChat } from "./types";
 
 export const CHAT_CLASSNAME = "Chat";
 
@@ -16,4 +16,4 @@ export class Chat extends ParseBaseClass {
   }
 }
 
-export * from './message'
+export * from "../message";

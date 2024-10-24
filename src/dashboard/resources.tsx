@@ -45,13 +45,13 @@ export const resources: IResourceItem[] = [
     },
   },
   {
-    name: "invoices",
-    list: "/invoices",
-    create: "/invoices/create",
-    edit: "/invoices/edit/:id",
-    show: "/invoices/show/:id",
+    name: "transaction",
+    list: "/transaction",
+    create: "/transaction/create",
+    edit: "/transaction/edit/:id",
+    show: "/transaction/show/:id",
     meta: {
-      label: "Invoices",
+      label: "Transaction",
       // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
       icon: <ContainerOutlined />,
     },
