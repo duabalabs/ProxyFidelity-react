@@ -37,6 +37,9 @@ export const DashboardLatestActivities: React.FC<{ limit?: number }> = ({
     error,
   } = useList<GetFieldsFromList<LatestActivitiesAuditsQuery>>({
     resource: "audits",
+    queryOptions: {
+      cacheTime: 0,
+    },
     pagination: {
       pageSize: limit,
     },

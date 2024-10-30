@@ -43,6 +43,7 @@ export const Notifications: React.FC = () => {
     },
     queryOptions: {
       enabled: open,
+      cacheTime: 0,
     },
   });
 

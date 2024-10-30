@@ -7,7 +7,7 @@ import {
   List,
   useTable,
 } from "@refinedev/antd";
-import { getDefaultFilter } from "@refinedev/core";
+import { getDefaultFilter, useList } from "@refinedev/core";
 
 import { SearchOutlined } from "@ant-design/icons";
 import { Form, Grid, Input, Space, Spin, Table } from "antd";
@@ -32,7 +32,10 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
     sorters,
     tableQuery: tableQueryResult,
   } = useTable<ProjectFile>({
-    resource: "ProjectFile",
+    resource: PROJECTFILE_CLASSNAME,
+    queryOptions: {
+      cacheTime: 0,
+    },
     onSearch: (values) => {
       return [
         {
@@ -60,6 +63,8 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
       ],
     },
   });
+  // console.log("Asd", tableProps?.dataSource?.[0]);
+  // console.log("asdasdas", tableProps?.dataSource?.[0]?.get?.("fileName"));
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     searchFormProps?.onFinish?.({

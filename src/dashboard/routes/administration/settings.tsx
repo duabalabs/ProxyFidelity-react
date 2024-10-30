@@ -89,6 +89,9 @@ const roleOptions: {
 const UsersTable = () => {
   const { tableProps, filters } = useTable<User>({
     resource: "users",
+    queryOptions: {
+      cacheTime: 0,
+    },
     sorters: {
       initial: [
         {

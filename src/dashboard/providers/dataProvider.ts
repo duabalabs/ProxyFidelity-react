@@ -50,12 +50,8 @@ export const dataProvider: DataProvider = {
     try {
       const results = await query.find();
       const total = await query.count();
-
       return {
-        data: results.map((item) => ({
-          id: item.id,
-          ...item.toJSON(),
-        })) as TData[],
+        data: results as TData[],
         total,
       };
     } catch (error) {
@@ -71,7 +67,7 @@ export const dataProvider: DataProvider = {
     try {
       const result = await query.get(`${id}`);
       return {
-        data: { id: result.id, ...result.toJSON() } as TData,
+        data: result as TData,
       };
     } catch (error) {
       return Promise.reject(error);
@@ -92,7 +88,7 @@ export const dataProvider: DataProvider = {
     try {
       const result = await parseInstance.save();
       return {
-        data: { id: result.id, ...result.toJSON() } as TData,
+        data: result as TData,
       };
     } catch (error) {
       return Promise.reject(error);
@@ -114,7 +110,7 @@ export const dataProvider: DataProvider = {
 
       const result = await parseInstance.save();
       return {
-        data: { id: result.id, ...result.toJSON() } as TData,
+        data: result as TData,
       };
     } catch (error) {
       return Promise.reject(error);

@@ -1,2 +1,1 @@
-export * from "./useAutoLoginForDemo";
-export * from './useParse'
+export * from "./useParse";

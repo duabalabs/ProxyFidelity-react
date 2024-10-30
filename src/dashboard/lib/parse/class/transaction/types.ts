@@ -80,6 +80,8 @@ export interface ITransaction extends Parse.Object {
    */
   project?: Project;
 
+  approved?: boolean;
+
   /**
    * List of related transactions.
    * @type {Transaction[]}

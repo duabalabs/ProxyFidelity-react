@@ -52,6 +52,9 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   const { data } = useList<CalendarEvent>({
     resource: CALENDAREVENT_CLASSNAME,
+    queryOptions: {
+      cacheTime: 0,
+    },
     pagination: {
       mode: "off",
     },

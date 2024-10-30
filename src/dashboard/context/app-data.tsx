@@ -9,6 +9,7 @@ type AppDataType = {
   updateActiveProject: (project: Project) => Promise<void>;
   projects: Project[];
   fetchProjects: () => void;
+  user: User;
 };
 const AppDataContext = createContext<AppDataType>({} as AppDataType);
 
@@ -20,6 +21,7 @@ export const AppDataProvider = ({ children }) => {
   useEffect(() => {
     const getInitialData = async () => {
       const getUser = Parse.User.current() as User;
+      await getUser.fetchWithInclude("role");
       setUser(getUser);
       const userActiveProject = getUser.get("activeProject");
       await userActiveProject?.fetch();
@@ -35,6 +37,7 @@ export const AppDataProvider = ({ children }) => {
   };
 
   const updateActiveProject = async (project) => {
+    if (!user) return;
     setActiveProject(project);
     user?.set("activeProject", project);
     await user.save();
@@ -42,7 +45,13 @@ export const AppDataProvider = ({ children }) => {
 
   return (
     <AppDataContext.Provider
-      value={{ activeProject, updateActiveProject, projects, fetchProjects }}
+      value={{
+        activeProject,
+        updateActiveProject,
+        projects,
+        fetchProjects,
+        user,
+      }}
     >
       {children}
     </AppDataContext.Provider>

@@ -20,8 +20,7 @@ import "./styles/oldbootstrap.css";
 const App: React.FC = () => {
   const hostname = window.location.hostname;
   const showDashboard =
-    hostname === "my.proxyfidelity.duckdns.org" ||
-    hostname === "178.128.162.225";
+    hostname === "my.proxyfidelity.com" || hostname === "178.128.162.225";
   const ConfigProvider = showDashboard
     ? CustomConfigProvider
     : AntdConfigProvider;

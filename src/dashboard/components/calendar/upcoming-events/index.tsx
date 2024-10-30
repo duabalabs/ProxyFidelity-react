@@ -74,6 +74,9 @@ export const CalendarUpcomingEvents: React.FC<CalendarUpcomingEventsProps> = ({
   const { activeProject } = useAppData();
   const { data, isLoading } = useList<CalendarEvent>({
     resource: CALENDAREVENT_CLASSNAME,
+    queryOptions: {
+      cacheTime: 0,
+    },
     pagination: {
       pageSize: limit,
     },

@@ -33,6 +33,7 @@ export const TransactionPreviewModal: React.FC<
   return (
     <Modal open={isVisible} onCancel={onClose} footer={null} width="80%">
       <Show
+        headerProps={{ style: { padding: 16 } }}
         title="Transactions"
         headerButtons={() => (
           <>

@@ -2,7 +2,8 @@ import { FC, PropsWithChildren, useState } from "react";
 
 import { List, useTable } from "@refinedev/antd";
 
-import { Grid, Space, Table, Typography } from "antd";
+import PaystackPop from "@paystack/inline-js";
+import { Button, Grid, message, Space, Table, Typography } from "antd";
 
 import { ListTitleButton, PaginationTotal } from "@/dashboard/components";
 import { useAppData } from "@/dashboard/context";
@@ -11,12 +12,16 @@ import { Transaction, TRANSACTION_CLASSNAME } from "@/dashboard/lib";
 import { TransactionPreviewModal } from "./components/transaction-preview-modal";
 
 export const TransactionListPage: FC<PropsWithChildren> = ({ children }) => {
-  const { activeProject } = useAppData();
+  const { activeProject, user } = useAppData(); // Fetch activeProject and user
   const screens = Grid.useBreakpoint();
   const [transaction, setTransaction] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedTransactions, setSelectedTransactions] = useState([]); // Track selected transactions
   const { tableProps } = useTable<Transaction>({
     resource: TRANSACTION_CLASSNAME,
+    queryOptions: {
+      cacheTime: 0,
+    },
     initialSorter: [
       {
         field: "date",
@@ -38,18 +43,6 @@ export const TransactionListPage: FC<PropsWithChildren> = ({ children }) => {
     (transaction) => transaction.isParent
   );
 
-  const processedData = parentTransactions?.map((transaction) => {
-    if (transaction.transactions?.length) {
-      return {
-        ...transaction,
-        children: transaction.transactions.map((subTransaction) => ({
-          ...subTransaction,
-        })),
-      };
-    }
-    return transaction;
-  });
-
   const handleRowClick = (record) => {
     if (record) {
       setTransaction(record);
@@ -63,6 +56,62 @@ export const TransactionListPage: FC<PropsWithChildren> = ({ children }) => {
     return `${negative ? "-" : ""}$${(value ?? 0).toFixed(2)}`;
   };
 
+  const handleSelectTransaction = (record, selected) => {
+    if (selected) {
+      setSelectedTransactions([...selectedTransactions, record]);
+    } else {
+      setSelectedTransactions(
+        selectedTransactions.filter((item) => item.id !== record.id)
+      );
+    }
+  };
+
+  const approveSelected = async () => {
+    try {
+      const transactionIds = selectedTransactions.map(
+        (transaction) => transaction.id
+      );
+      await Parse.Cloud.run("approveTransaction", {
+        transactionId: transactionIds,
+      });
+      message.success("Selected transactions approved!");
+    } catch (error) {
+      message.error("Error during batch approval.");
+    }
+  };
+
+  const paySelected = async () => {
+    const totalAmount = selectedTransactions.reduce(
+      (sum, transaction) => sum + transaction.unitPrice,
+      0
+    );
+
+    const handler = PaystackPop.setup({
+      key: "your-paystack-public-key",
+      email: user.get("email"),
+      amount: totalAmount,
+      callback: async (response) => {
+        try {
+          await Promise.all(
+            selectedTransactions.map(async (transaction) => {
+              await Parse.Cloud.run("markAsPaid", {
+                transactionId: transaction.id,
+                reference: response.reference,
+              });
+            })
+          );
+          message.success("Payment successful for selected transactions!");
+        } catch (error) {
+          message.error("Error marking transactions as paid.");
+        }
+      },
+    });
+    handler.openIframe();
+  };
+
+  if (!user || !activeProject) {
+    return null;
+  }
   return (
     <div className="page-container">
       <List
@@ -98,21 +147,29 @@ export const TransactionListPage: FC<PropsWithChildren> = ({ children }) => {
           }}
           expandable={{ defaultExpandAllRows: true }}
           rowKey="id"
+          rowSelection={{
+            type: "checkbox",
+            onSelect: handleSelectTransaction, // Added row selection for batch actions
+            getCheckboxProps: (record) => ({
+              disabled: user.isClient && record.approved, // Example: Disable checkbox for clients if already approved
+            }),
+          }}
           onRow={(record) => {
             return {
               onClick: () => handleRowClick(record),
               style: { cursor: "pointer" },
             };
           }}
-          dataSource={processedData as any}
+          dataSource={parentTransactions}
         >
+          {/* Original columns */}
           <Table.Column
             title="Title"
             dataIndex="title"
             key="title"
             render={(text, record) => (
               <Typography.Text>
-                {text || record.vendor || `${record.children[0].title}...`}
+                {text || record.vendor || `${record?.children?.[0]?.title}...`}
               </Typography.Text>
             )}
           />
@@ -230,8 +287,58 @@ export const TransactionListPage: FC<PropsWithChildren> = ({ children }) => {
               )
             }
           />
+
+          {/* New Approval Column */}
+          {user.isAdmin ? ( // Only show to Admins and Clients
+            <Table.Column
+              title="Approval"
+              dataIndex="approved"
+              key="approved"
+              render={(approved) => (
+                <Typography.Text type={approved ? "success" : "warning"}>
+                  {approved ? "Approved" : "Pending"}
+                </Typography.Text>
+              )}
+            />
+          ) : null}
+
+          {/* New Payment Column */}
+          {user.isAdmin || user.isClient ? ( // Only show to Admins and Clients
+            <Table.Column
+              title="Payment"
+              dataIndex="paid"
+              key="paid"
+              render={(paid) => (
+                <Typography.Text type={paid ? "success" : "danger"}>
+                  {paid ? "Paid" : "Not Paid"}
+                </Typography.Text>
+              )}
+            />
+          ) : null}
         </Table>
       </List>
+
+      {/* Batch Action Buttons */}
+      {user.isAdmin || user.isClient ? ( // Only show batch actions to Admins or Clients
+        <Space>
+          {user.isAdmin && (
+            <Button
+              onClick={approveSelected}
+              disabled={selectedTransactions.length === 0}
+            >
+              Approve Selected
+            </Button>
+          )}
+          <Button
+            type="primary"
+            onClick={paySelected}
+            disabled={selectedTransactions.length === 0}
+          >
+            Pay Selected
+          </Button>
+        </Space>
+      ) : null}
+
       {children}
 
       {transaction && (

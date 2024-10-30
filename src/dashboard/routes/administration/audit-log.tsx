@@ -43,6 +43,9 @@ const getActionColor = (action: string): TagProps["color"] => {
 
 export const AuditLogPage = () => {
   const { tableProps, filters, sorters } = useTable<Audit>({
+    queryOptions: {
+      cacheTime: 0,
+    },
     meta: {
       gqlQuery: ADMINISTRATION_AUDIT_LOGS_QUERY,
     },
@@ -111,7 +114,7 @@ export const AuditLogPage = () => {
             defaultFilteredValue={getDefaultFilter(
               "user.name",
               filters,
-              "contains",
+              "contains"
             )}
           />
           <Table.Column
@@ -165,7 +168,7 @@ export const AuditLogPage = () => {
             defaultFilteredValue={getDefaultFilter(
               "createdAt",
               filters,
-              "between",
+              "between"
             )}
             defaultSortOrder={getDefaultSortOrder("createdAt", sorters)}
           />

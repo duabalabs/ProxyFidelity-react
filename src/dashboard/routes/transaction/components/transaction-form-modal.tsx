@@ -115,7 +115,7 @@ export const TransactionFormModal = ({
           } as ITransaction);
           return item;
         });
-        entryTransaction.set("transactions", entryTransactions);
+        entryTransaction.set("children", entryTransactions);
       } else {
         entryTransaction.fromObject(transactions[0]);
       }

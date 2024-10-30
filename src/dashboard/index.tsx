@@ -10,7 +10,7 @@ import routerProvider, {
 } from "@refinedev/react-router-v6";
 
 import { FullScreenLoading, Layout } from "./components";
-import { useAutoLoginForDemo, useParseConnect } from "./hooks";
+import { useParseConnect } from "./hooks";
 import { IParseServerAPICred } from "./lib/parse";
 import { authProvider, dataProvider } from "./providers";
 import { resources } from "./resources";
@@ -25,7 +25,9 @@ import { DashboardPage } from "./routes/dashboard";
 import { FilesCreatePage, FilesEditPage, FilesListPage } from "./routes/files";
 import { ForgotPasswordPage } from "./routes/forgot-password";
 import { LoginPage } from "./routes/login";
+import { PeopleListPage } from "./routes/people";
 import { RegisterPage } from "./routes/register";
+import { KanbanCreatePage, KanbanEditPage, KanbanPage } from "./routes/tasks";
 import {
   TransactionCreatePage,
   TransactionEditPage,
@@ -42,9 +44,8 @@ const Dashboard: React.FC = () => {
   const { loadingParse: initialLoad } = useParseConnect(parseConfig);
   // This hook is used to automatically login the user.
   // We use this hook to skip the login page and demonstrate the application more quickly.
-  const { loading } = useAutoLoginForDemo();
 
-  if (loading || initialLoad) {
+  if (initialLoad) {
     return <FullScreenLoading />;
   }
 
@@ -91,6 +92,17 @@ const Dashboard: React.FC = () => {
           </Route>
 
           <Route
+            path="/tasks"
+            element={
+              <KanbanPage>
+                <Outlet />
+              </KanbanPage>
+            }
+          >
+            <Route path="create" element={<KanbanCreatePage />} />
+            <Route path="edit/:id" element={<KanbanEditPage />} />
+          </Route>
+          <Route
             path="/files"
             element={
               <FilesListPage>
@@ -115,7 +127,6 @@ const Dashboard: React.FC = () => {
               }
             ></Route>
           </Route>
-
           <Route
             path="/transaction"
             element={
@@ -131,7 +142,7 @@ const Dashboard: React.FC = () => {
                   <Outlet />
                 </TransactionCreatePage>
               }
-            ></Route>
+            />
             <Route
               path="edit/:id"
               element={
@@ -139,7 +150,33 @@ const Dashboard: React.FC = () => {
                   <Outlet />
                 </TransactionEditPage>
               }
-            ></Route>
+            />
+          </Route>
+
+          <Route
+            path="/people"
+            element={
+              <PeopleListPage>
+                <Outlet />
+              </PeopleListPage>
+            }
+          >
+            {/* <Route
+    path="create"
+    element={
+      <TransactionCreatePage>
+        <Outlet />
+      </TransactionCreatePage>
+    }
+  />
+  <Route
+    path="edit/:id"
+    element={
+      <TransactionEditPage>
+        <Outlet />
+      </TransactionEditPage>
+    }
+  /> */}
           </Route>
 
           <Route path="/administration" element={<Outlet />}>
