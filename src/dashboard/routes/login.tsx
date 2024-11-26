@@ -36,7 +36,7 @@ const formFields: FieldConfig[] = [
     name: "fullName",
     placeholder: "Enter your full name",
     rules: [{ required: true, message: "Please enter your full name" }],
-    initialValue: "Manny Opp",
+    initialValue: "",
   },
   {
     label: "Email",
@@ -45,28 +45,28 @@ const formFields: FieldConfig[] = [
     rules: [
       { required: true, type: "email", message: "Please enter a valid email" },
     ],
-    initialValue: "duabalabs@gmail.com",
+    initialValue: "",
   },
   {
     label: "Phone Number",
     name: "phoneNumber",
     placeholder: "Enter your phone number",
     rules: [{ required: true, message: "Please enter your phone number" }],
-    initialValue: "+233592838383",
+    initialValue: "",
   },
   {
     label: "Company Name",
     name: "companyName",
     placeholder: "Enter your company name",
     rules: [{ required: true, message: "Please enter your company name" }],
-    initialValue: "DuabaLabs",
+    initialValue: "",
   },
   {
     label: "Project Name",
     name: "projectName",
     placeholder: "Enter your project name",
     rules: [{ required: true, message: "Please enter your project name" }],
-    initialValue: "FarmLand",
+    initialValue: "",
   },
   {
     label: "Project Description",
@@ -74,7 +74,7 @@ const formFields: FieldConfig[] = [
     placeholder: "Describe your project",
     rules: [{ required: true, message: "Please enter a project description" }],
     type: "textarea",
-    initialValue: "A Land to use for farming",
+    initialValue: "",
   },
 ];
 
@@ -109,7 +109,6 @@ export const LoginPage: React.FC = () => {
   const handleOnFinish = useCallback(
     async (values: FormValues) => {
       setLoading(true);
-      console.log("values", values);
       try {
         await Parse.Cloud.run("requestProject", values);
         message.success(

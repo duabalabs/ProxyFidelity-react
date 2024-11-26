@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Photo } from "react-photo-album";
 
 import { message, Modal, Spin } from "antd";
 import Parse from "parse";
@@ -7,17 +8,19 @@ import { ProjectFile } from "../../../lib";
 
 type FilePreviewModalProps = {
   isVisible: boolean;
-  file: ProjectFile;
+  file?: ProjectFile;
+  photo?: Photo;
   onClose: () => void;
 };
 
 export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
   isVisible,
   file,
+  photo,
   onClose,
 }) => {
   const [loading, setLoading] = useState(true);
-  const [currentUrl, setCurrentUrl] = useState<string | null>(null);
+  const [currentUrl, setCurrentUrl] = useState<string | null>();
 
   const name = file?.fileName ?? "File Content";
 
@@ -61,9 +64,13 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
 
   useEffect(() => {
     if (isVisible) {
-      fetchPresignedUrl();
+      if (photo) {
+        setCurrentUrl(photo.src);
+      } else {
+        fetchPresignedUrl();
+      }
     }
-  }, [isVisible, file]);
+  }, [isVisible, file, photo]);
 
   const isImage = /\.(jpg|jpeg|png|gif)(\?.*)?$/i.test(currentUrl);
   const isPdf = /\.(pdf)(\?.*)?$/i.test(currentUrl);

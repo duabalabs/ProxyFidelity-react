@@ -44,13 +44,25 @@ export const resources: IResourceItem[] = [
     },
   },
   {
-    name: "files",
-    list: "/files",
-    create: "/files/create",
-    edit: "/files/edit/:id",
-    show: "/files/show/:id",
+    name: "documents",
+    list: "/files/documents",
+    create: "/files/documents/create",
+    edit: "/files/documents/edit/:id",
+    show: "/files/documents/show/:id",
     meta: {
-      label: "Files",
+      label: "Documents",
+      // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
+      icon: <ContainerOutlined />,
+    },
+  },
+  {
+    name: "gallery",
+    list: "/files/gallery",
+    create: "/files/gallery/create",
+    edit: "/files/gallery/edit/:id",
+    show: "/files/gallery/show/:id",
+    meta: {
+      label: "Gallery",
       // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
       icon: <ContainerOutlined />,
     },

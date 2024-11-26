@@ -22,7 +22,12 @@ import {
   CalendarShowPage,
 } from "./routes/calendar";
 import { DashboardPage } from "./routes/dashboard";
-import { FilesCreatePage, FilesEditPage, FilesListPage } from "./routes/files";
+import {
+  DocumentListPage,
+  FilesCreatePage,
+  FilesEditPage,
+  GalleryListPage,
+} from "./routes/files";
 import { ForgotPasswordPage } from "./routes/forgot-password";
 import { LoginPage } from "./routes/login";
 import { PeopleListPage } from "./routes/people";
@@ -102,30 +107,57 @@ const Dashboard: React.FC = () => {
             <Route path="create" element={<KanbanCreatePage />} />
             <Route path="edit/:id" element={<KanbanEditPage />} />
           </Route>
-          <Route
-            path="/files"
-            element={
-              <FilesListPage>
-                <Outlet />
-              </FilesListPage>
-            }
-          >
+          <Route path="/files">
             <Route
-              path="create"
+              path="documents"
               element={
-                <FilesCreatePage>
+                <DocumentListPage>
                   <Outlet />
-                </FilesCreatePage>
+                </DocumentListPage>
               }
-            ></Route>
+            >
+              <Route
+                path="create"
+                element={
+                  <FilesCreatePage>
+                    <Outlet />
+                  </FilesCreatePage>
+                }
+              />
+              <Route
+                path="edit/:id"
+                element={
+                  <FilesEditPage>
+                    <Outlet />
+                  </FilesEditPage>
+                }
+              />
+            </Route>
             <Route
-              path="edit/:id"
+              path="gallery"
               element={
-                <FilesEditPage>
+                <GalleryListPage>
                   <Outlet />
-                </FilesEditPage>
+                </GalleryListPage>
               }
-            ></Route>
+            >
+              <Route
+                path="create"
+                element={
+                  <FilesCreatePage>
+                    <Outlet />
+                  </FilesCreatePage>
+                }
+              />
+              <Route
+                path="edit/:id"
+                element={
+                  <FilesEditPage>
+                    <Outlet />
+                  </FilesEditPage>
+                }
+              />
+            </Route>
           </Route>
           <Route
             path="/transaction"

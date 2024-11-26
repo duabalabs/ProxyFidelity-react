@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import { getValueFromEvent, useModalForm } from "@refinedev/antd";
 import { useNavigation } from "@refinedev/core";
@@ -17,7 +17,14 @@ export const FilesFormModal = ({
   onCancel,
   onMutationSuccess,
 }: any) => {
+  const location = useLocation();
+  const acceptedFiles = location.pathname.includes("documents")
+    ? ".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+    : location.pathname.includes("gallery")
+    ? "image/*,video/*"
+    : undefined;
   const params = useParams<{ id: string }>();
+  console.log(useLocation());
   const { list } = useNavigation();
   const [loading, setLoading] = useState(false);
   const { activeProject } = useAppData();
@@ -91,6 +98,7 @@ export const FilesFormModal = ({
             beforeUpload={handleBeforeUpload}
             listType="text"
             maxCount={10}
+            accept={acceptedFiles}
           >
             <Button
               icon={

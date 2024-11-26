@@ -6,8 +6,7 @@ import { App as AntdApp, ConfigProvider as AntdConfigProvider } from "antd";
 
 import Dashboard from "./dashboard";
 import { AlgoliaSearchWrapper } from "./dashboard/components";
-import { ConfigProvider as CustomConfigProvider } from "./dashboard/providers/config-provider";
-import LandingPage from "./landing-page";
+import { ConfigProvider } from "./dashboard/providers/config-provider";
 
 import "./utilities/init-dayjs";
 import "@refinedev/antd/dist/reset.css";
@@ -18,29 +17,13 @@ import "./styles/layout.css";
 import "./styles/oldbootstrap.css";
 
 const App: React.FC = () => {
-  const hostname = window.location.hostname;
-  const showDashboard =
-    hostname === "my.proxyfidelity.com" || hostname === "178.128.162.225";
-  const ConfigProvider = showDashboard
-    ? CustomConfigProvider
-    : AntdConfigProvider;
   return (
     <AlgoliaSearchWrapper>
       <BrowserRouter>
         <ConfigProvider>
           <AntdApp>
             <DevtoolsProvider>
-              {showDashboard ? (
-                <>
-                  {/* Dashboard Routes */}
-                  <Dashboard />
-                </>
-              ) : (
-                <>
-                  {/* Landing Page Routes */}
-                  <LandingPage />
-                </>
-              )}
+              <Dashboard />
               <DevtoolsPanel />
             </DevtoolsProvider>
           </AntdApp>

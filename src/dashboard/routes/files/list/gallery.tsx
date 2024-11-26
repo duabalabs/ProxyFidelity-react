@@ -1,4 +1,5 @@
 import type { FC, PropsWithChildren } from "react";
+import { RowsPhotoAlbum } from "react-photo-album";
 
 import { FilterDropdown, getDefaultSortOrder, List } from "@refinedev/antd";
 import { getDefaultFilter } from "@refinedev/core";
@@ -11,23 +12,25 @@ import { ListTitleButton, PaginationTotal, Text } from "@/dashboard/components";
 import { PROJECTFILE_CLASSNAME } from "@/dashboard/lib/parse";
 import { FilePreviewModal } from "@/dashboard/routes/files/components/file-preview-modal";
 
-import { useDocumentListActions } from "./actions";
+import { useGalleryListActions } from "./actions";
 
-export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
+import "react-photo-album/rows.css";
+
+export const GalleryListPage: FC<PropsWithChildren> = ({ children }) => {
   const {
     screens,
-    file,
+    photoItem,
     isModalVisible,
     setIsModalVisible,
-    tableProps,
     searchFormProps,
     filters,
-    sorters,
     tableQueryResult,
     debouncedOnChange,
     handleRowClick,
-  } = useDocumentListActions();
+    photos,
+  } = useGalleryListActions();
 
+  console.log("the photos", photos);
   return (
     <div className="page-container">
       <List
@@ -75,60 +78,20 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
             marginTop: "28px",
           },
         }}
-        title={<ListTitleButton buttonText="Add file" toPath="files" />}
+        title={<ListTitleButton buttonText="Add Media" toPath="gallery" />}
       >
-        <Table
-          {...tableProps}
-          pagination={{
-            ...tableProps.pagination,
-            showTotal: (total) => (
-              <PaginationTotal
-                total={total}
-                entityName={PROJECTFILE_CLASSNAME}
-              />
-            ),
-          }}
-          rowKey="id"
-          onRow={(record) => {
-            return {
-              onClick: () => handleRowClick(record),
-              style: { cursor: "pointer" }, // Set cursor to pointer for clickable rows
-            };
-          }}
-        >
-          <Table.Column
-            dataIndex="fileName"
-            title="Name"
-            defaultFilteredValue={getDefaultFilter("name", filters)}
-            filterDropdown={(props) => (
-              <FilterDropdown {...props}>
-                <Input placeholder="Search Name" />
-              </FilterDropdown>
-            )}
-          />
-          <Table.Column<File>
-            dataIndex={"createdAt"}
-            title="Created at"
-            defaultSortOrder={getDefaultSortOrder("createdAt", sorters)}
-            render={(value) => {
-              return <Text>{dayjs(value).fromNow()}</Text>;
-            }}
-          />
-        </Table>
+        <RowsPhotoAlbum photos={photos} onClick={handleRowClick} />
       </List>
       {children}
 
       {/* Modal for File Preview */}
-      {file && (
+      {photoItem && (
         <FilePreviewModal
           isVisible={isModalVisible}
-          file={file}
+          photo={photoItem.photo}
           onClose={() => setIsModalVisible(false)}
         />
       )}
     </div>
   );
 };
-
-export * from './documents'
-export * from './gallery';

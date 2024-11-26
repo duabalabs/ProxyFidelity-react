@@ -13,7 +13,7 @@ import { FilePreviewModal } from "@/dashboard/routes/files/components/file-previ
 
 import { useDocumentListActions } from "./actions";
 
-export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
+export const DocumentListPage: FC<PropsWithChildren> = ({ children }) => {
   const {
     screens,
     file,
@@ -75,7 +75,7 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
             marginTop: "28px",
           },
         }}
-        title={<ListTitleButton buttonText="Add file" toPath="files" />}
+        title={<ListTitleButton buttonText="Add Documents" toPath="documents" />}
       >
         <Table
           {...tableProps}
@@ -129,6 +129,3 @@ export const FilesListPage: FC<PropsWithChildren> = ({ children }) => {
     </div>
   );
 };
-
-export * from './documents'
-export * from './gallery';
