@@ -1,8 +1,8 @@
 "use client";
 
-import Parse from 'parse';
+import Parse from "parse";
 
-import { ParseBaseClass } from '../class/baseClasses';
+import { ParseBaseClass } from "../class/baseClasses";
 
 export interface IParseServerAPICred {
   serverURL: string;
@@ -21,9 +21,9 @@ export class ParseInitialize {
     this.initialize(config, subClasses);
   }
   protected initialize(config: IParseServerAPICred, subClasses?: SubClass[]) {
-
     Parse.initialize(config.appId, config.javascriptKey);
     Parse.serverURL = config.serverURL;
+    Parse.enableLocalDatastore();
     this.initialized = true;
     if (subClasses) {
       this.registerParseSubClasses(subClasses);

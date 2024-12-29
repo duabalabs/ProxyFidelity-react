@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { message } from "antd";
 import Parse from "parse";
@@ -6,8 +6,9 @@ import Parse from "parse";
 import { ProjectFile } from "../lib";
 
 export const useFetchPresignedUrl = (files: ProjectFile[]) => {
-  const [loading, setLoading] = useState(true);
-  const [preSignedUrlFiles, setPreSignedUrlFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [preSignedUrlFiles, setPreSignedUrlFiles] = useState<ProjectFile[]>([]);
+  const prevFilesRef = useRef<ProjectFile[]>([]); // To track previous `files` value
 
   const isUrlExpired = (expiryDate?: Date): boolean => {
     if (!expiryDate) return true;
@@ -15,43 +16,54 @@ export const useFetchPresignedUrl = (files: ProjectFile[]) => {
     return now >= new Date(expiryDate);
   };
 
-  const fetchPresignedUrl = async () => {
-    setLoading(true);
+  const fetchPresignedUrl = async (newFiles: ProjectFile[]) => {
+    setIsLoading(true);
 
-    if (files?.length > 0) {
-      const newstuff = [];
-      await Promise.all(
-        files.map(async (file) => {
-          if (
-            file.filePath &&
-            !(file.presignedUrl && !isUrlExpired(file.presignedUrlExpiry))
-          ) {
-            try {
-              const response = await Parse.Cloud.run(
-                "generateReadOnlyPresignedFileUrl",
-                {
-                  filePath: file.filePath,
-                  fileType: file.fileType,
-                }
-              );
-              const { presignedUrl, expirationDate } = response;
+    const updatedFiles: ProjectFile[] = [];
 
-              file.presignedUrl = presignedUrl;
-              file.presignedUrlExpiry = new Date(expirationDate);
-              newstuff.push(file);
-            } catch (error) {
-              message.error("Failed to generate a download link.");
-            }
+    await Promise.all(
+      newFiles.map(async (file) => {
+        if (
+          file.filePath &&
+          !(file.presignedUrl && !isUrlExpired(file.presignedUrlExpiry))
+        ) {
+          try {
+            const response = await Parse.Cloud.run(
+              "generateReadOnlyPresignedFileUrl",
+              {
+                filePath: file.filePath,
+                fileType: file.fileType,
+              }
+            );
+            const { presignedUrl, expirationDate } = response;
+
+            file.presignedUrl = presignedUrl;
+            file.presignedUrlExpiry = new Date(expirationDate);
+          } catch (error) {
+            message.error("Failed to generate a download link.");
           }
-        })
-      );
-      setPreSignedUrlFiles(newstuff);
-      setLoading(false);
-    }
+        }
+        updatedFiles.push(file);
+      })
+    );
+
+    setPreSignedUrlFiles(updatedFiles);
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    fetchPresignedUrl();
+    // Compare `files` with `prevFilesRef.current` to prevent unnecessary re-fetching
+    if (
+      files &&
+      (files.length !== prevFilesRef.current.length ||
+        files.some(
+          (file, index) => file.id !== prevFilesRef.current[index]?.id
+        ))
+    ) {
+      prevFilesRef.current = files; // Update the reference
+      fetchPresignedUrl(files);
+    }
   }, [files]);
-  return { preSignedUrlFiles, loading };
+
+  return { preSignedUrlFiles, isLoading };
 };

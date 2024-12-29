@@ -24,9 +24,6 @@ export const useDocumentListActions = () => {
     tableQuery: tableQueryResult,
   } = useTable<ProjectFile>({
     resource: PROJECTFILE_CLASSNAME,
-    queryOptions: {
-      cacheTime: 0,
-    },
     onSearch: (values) => {
       return [
         {
@@ -107,9 +104,7 @@ export const useGalleryListActions = () => {
     tableQuery: tableQueryResult,
   } = useTable<ProjectFile>({
     resource: PROJECTFILE_CLASSNAME,
-    queryOptions: {
-      cacheTime: 0,
-    },
+
     onSearch: (values) => {
       return [
         {
@@ -143,7 +138,7 @@ export const useGalleryListActions = () => {
     },
   });
 
-  const { preSignedUrlFiles } = useFetchPresignedUrl(
+  const { preSignedUrlFiles, isLoading } = useFetchPresignedUrl(
     tableQueryResult?.data?.data
   );
 
@@ -166,7 +161,6 @@ export const useGalleryListActions = () => {
   const debouncedOnChange = debounce(onSearch, 500);
 
   const handleRowClick = (item: ClickHandlerProps<Photo>) => {
-    console.log(item);
     setPhotoItem(item);
     setIsModalVisible(true);
   };
@@ -184,5 +178,6 @@ export const useGalleryListActions = () => {
     onSearch,
     debouncedOnChange,
     handleRowClick,
+    isLoading: tableQueryResult.isFetching || isLoading,
   };
 };

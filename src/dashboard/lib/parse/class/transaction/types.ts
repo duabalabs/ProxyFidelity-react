@@ -67,13 +67,6 @@ export interface ITransaction extends Parse.Object {
    * @type {string}
    */
   date?: string;
-
-  /**
-   * Indicates if the transaction is a parent transaction.
-   * @type {boolean}
-   */
-  isParent?: boolean;
-
   /**
    * Project associated with the transaction.
    * @type {Project}
@@ -82,9 +75,5 @@ export interface ITransaction extends Parse.Object {
 
   approved?: boolean;
 
-  /**
-   * List of related transactions.
-   * @type {Transaction[]}
-   */
-  transactions?: Transaction[];
+  deposit?: boolean;
 }

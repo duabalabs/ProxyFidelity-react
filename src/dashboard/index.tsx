@@ -95,18 +95,6 @@ const Dashboard: React.FC = () => {
             <Route path="edit/:id" element={<CalendarEditPage />} />
             <Route path="create" element={<CalendarCreatePage />} />
           </Route>
-
-          <Route
-            path="/tasks"
-            element={
-              <KanbanPage>
-                <Outlet />
-              </KanbanPage>
-            }
-          >
-            <Route path="create" element={<KanbanCreatePage />} />
-            <Route path="edit/:id" element={<KanbanEditPage />} />
-          </Route>
           <Route path="/files">
             <Route
               path="documents"
@@ -183,32 +171,6 @@ const Dashboard: React.FC = () => {
                 </TransactionEditPage>
               }
             />
-          </Route>
-
-          <Route
-            path="/people"
-            element={
-              <PeopleListPage>
-                <Outlet />
-              </PeopleListPage>
-            }
-          >
-            {/* <Route
-    path="create"
-    element={
-      <TransactionCreatePage>
-        <Outlet />
-      </TransactionCreatePage>
-    }
-  />
-  <Route
-    path="edit/:id"
-    element={
-      <TransactionEditPage>
-        <Outlet />
-      </TransactionEditPage>
-    }
-  /> */}
           </Route>
 
           <Route path="/administration" element={<Outlet />}>

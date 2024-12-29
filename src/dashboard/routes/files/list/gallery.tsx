@@ -1,15 +1,13 @@
 import type { FC, PropsWithChildren } from "react";
 import { RowsPhotoAlbum } from "react-photo-album";
 
-import { FilterDropdown, getDefaultSortOrder, List } from "@refinedev/antd";
+import { List } from "@refinedev/antd";
 import { getDefaultFilter } from "@refinedev/core";
 
 import { SearchOutlined } from "@ant-design/icons";
-import { Form, Input, Space, Spin, Table } from "antd";
-import dayjs from "dayjs";
+import { Form, Input, Skeleton, Space, Spin } from "antd";
 
-import { ListTitleButton, PaginationTotal, Text } from "@/dashboard/components";
-import { PROJECTFILE_CLASSNAME } from "@/dashboard/lib/parse";
+import { ListTitleButton } from "@/dashboard/components";
 import { FilePreviewModal } from "@/dashboard/routes/files/components/file-preview-modal";
 
 import { useGalleryListActions } from "./actions";
@@ -24,13 +22,12 @@ export const GalleryListPage: FC<PropsWithChildren> = ({ children }) => {
     setIsModalVisible,
     searchFormProps,
     filters,
-    tableQueryResult,
     debouncedOnChange,
     handleRowClick,
     photos,
+    isLoading,
   } = useGalleryListActions();
 
-  console.log("the photos", photos);
   return (
     <div className="page-container">
       <List
@@ -59,12 +56,7 @@ export const GalleryListPage: FC<PropsWithChildren> = ({ children }) => {
                         onPointerLeaveCapture={undefined}
                       />
                     }
-                    suffix={
-                      <Spin
-                        size="small"
-                        spinning={tableQueryResult.isFetching}
-                      />
-                    }
+                    suffix={<Spin size="small" spinning={isLoading} />}
                     placeholder="Search by name"
                     onChange={debouncedOnChange}
                   />
@@ -80,7 +72,13 @@ export const GalleryListPage: FC<PropsWithChildren> = ({ children }) => {
         }}
         title={<ListTitleButton buttonText="Add Media" toPath="gallery" />}
       >
-        <RowsPhotoAlbum photos={photos} onClick={handleRowClick} />
+        {isLoading &&
+          Array.from({ length: 10 }).map((_, index) => (
+            <Skeleton key={index} round />
+          ))}
+        {!isLoading && (
+          <RowsPhotoAlbum photos={photos} onClick={handleRowClick} />
+        )}
       </List>
       {children}
 
