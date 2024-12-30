@@ -16,29 +16,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step 2: Create .env File Locally
+      - name: Create .env File
+        run: |
+          cat <<EOF > .env
+          VITE_PARSE_APP_ID=${{ secrets.PARSE_APP_ID }}
+          VITE_PARSE_JAVASCRIPT_KEY=${{ secrets.PARSE_JAVASCRIPT_KEY }}
+          VITE_PARSE_SERVER_URL=${{ secrets.PARSE_SERVER_URL }}
+          EOF
+
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: yarn install
 
-      - name: Create .env File
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cat <<EOF > .env
-            VITE_PARSE_APP_ID=${{ secrets.PARSE_APP_ID }}
-            VITE_PARSE_JAVASCRIPT_KEY=${{ secrets.PARSE_JAVASCRIPT_KEY }}
-            VITE_PARSE_SERVER_URL=${{ secrets.PARSE_SERVER_URL }}
-            EOF
-
+      # Step 4: Build project
       - name: Build project
         run: yarn build
 
-      - name: Upload build to server
+      # Step 5: Upload build files to the server
+      - name: Upload Build to Server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.DROPLET_IP }}
@@ -47,6 +47,7 @@ jobs:
           source: dist/
           target: /var/www/dashboard/
 
+      # Step 6: Reload Nginx
       - name: Reload Nginx
         uses: appleboy/ssh-action@v1.2.0
         with:
