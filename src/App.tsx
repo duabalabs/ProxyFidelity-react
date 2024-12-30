@@ -4,9 +4,9 @@ import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 
 import { App as AntdApp, ConfigProvider as AntdConfigProvider } from "antd";
 
-import Dashboard from "./dashboard";
-import { AlgoliaSearchWrapper } from "./dashboard/components";
-import { ConfigProvider } from "./dashboard/providers/config-provider";
+import Dashboard from ".";
+import { AlgoliaSearchWrapper } from "./components";
+import { ConfigProvider } from "./providers/config-provider";
 
 import "./utilities/init-dayjs";
 import "@refinedev/antd/dist/reset.css";
