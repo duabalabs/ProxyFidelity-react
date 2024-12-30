@@ -1,0 +1,57 @@
+name: Deploy Dashboard App
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PARSE_APP_ID: ${{ secrets.PARSE_APP_ID }}
+  PARSE_JAVASCRIPT_KEY: ${{ secrets.PARSE_JAVASCRIPT_KEY }}
+  PARSE_SERVER_URL: ${{ secrets.PARSE_SERVER_URL }}
+
+jobs:
+  deploy-dashboard:
+    name: Deploy Dashboard
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Create .env File
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cat <<EOF > .env
+            VITE_PARSE_APP_ID=${{ secrets.PARSE_APP_ID }}
+            VITE_PARSE_JAVASCRIPT_KEY=${{ secrets.PARSE_JAVASCRIPT_KEY }}
+            VITE_PARSE_SERVER_URL=${{ secrets.PARSE_SERVER_URL }}
+            EOF
+
+      - name: Build project
+        run: yarn build
+
+      - name: Upload build to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: build/
+          target: /var/www/dashboard/
+
+      - name: Reload Nginx
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo systemctl reload nginx
