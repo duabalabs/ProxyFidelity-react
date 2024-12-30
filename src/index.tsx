@@ -44,7 +44,6 @@ const Dashboard: React.FC = () => {
     appId: import.meta.env.VITE_PARSE_APP_ID,
     javascriptKey: import.meta.env.VITE_PARSE_JAVASCRIPT_KEY,
   };
-  console.log(parseConfig);
   const { loadingParse: initialLoad } = useParseConnect(parseConfig);
   // This hook is used to automatically login the user.
   // We use this hook to skip the login page and demonstrate the application more quickly.
