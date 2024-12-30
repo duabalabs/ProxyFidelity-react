@@ -44,7 +44,7 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: build/
+          source: dist/
           target: /var/www/dashboard/
 
       - name: Reload Nginx
