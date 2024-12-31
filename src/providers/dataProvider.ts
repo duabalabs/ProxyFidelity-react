@@ -63,7 +63,7 @@ export const dataProvider: DataProvider = {
       const total = await query.count();
 
       // Cache fetched data locally
-      await Parse.Object.pinAll(results);
+      // await Parse.Object.pinAll(results);
 
       return {
         data: results.map((item) => ({

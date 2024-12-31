@@ -41,8 +41,8 @@ export const useDocumentListActions = () => {
           operator: "eq",
         },
         {
-          field: "document",
-          value: true,
+          field: "media",
+          value: false,
           operator: "eq",
         },
       ],
